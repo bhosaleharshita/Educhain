@@ -26,7 +26,7 @@ function yaml_ccp {
         organizations/ccp-template.yaml | sed -e $'s/\\\\n/\\\n          /g'
 }
 
-ORG=1
+ORG=uni
 P0PORT=7051
 CAPORT=7054
 PEERPEM=organizations/peerOrganizations/uni.example.com/tlsca/tlsca.uni.example.com-cert.pem
@@ -35,7 +35,7 @@ CAPEM=organizations/peerOrganizations/uni.example.com/ca/ca.uni.example.com-cert
 echo "$(json_ccp $ORG $P0PORT $CAPORT $PEERPEM $CAPEM)" > organizations/peerOrganizations/uni.example.com/connection-uni.json
 echo "$(yaml_ccp $ORG $P0PORT $CAPORT $PEERPEM $CAPEM)" > organizations/peerOrganizations/uni.example.com/connection-uni.yaml
 
-ORG=2
+ORG=mhrd
 P0PORT=9051
 CAPORT=8054
 PEERPEM=organizations/peerOrganizations/mhrd.example.com/tlsca/tlsca.mhrd.example.com-cert.pem
@@ -44,7 +44,7 @@ CAPEM=organizations/peerOrganizations/mhrd.example.com/ca/ca.mhrd.example.com-ce
 echo "$(json_ccp $ORG $P0PORT $CAPORT $PEERPEM $CAPEM)" > organizations/peerOrganizations/mhrd.example.com/connection-mhrd.json
 echo "$(yaml_ccp $ORG $P0PORT $CAPORT $PEERPEM $CAPEM)" > organizations/peerOrganizations/mhrd.example.com/connection-mhrd.yaml
 
-ORG=3
+ORG=thirdparty
 P0PORT=11051
 CAPORT=11054
 PEERPEM=organizations/peerOrganizations/thirdparty.example.com/tlsca/tlsca.thirdparty.example.com-cert.pem
