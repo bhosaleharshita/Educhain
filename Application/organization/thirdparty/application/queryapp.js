@@ -70,9 +70,9 @@ async function main() {
 
 
         // 1 asset history
-        console.log('1. Query Commercial Paper History....');
+        console.log('1. Query Certificate Paper History....');
         console.log('-----------------------------------------------------------------------------------------\n');
-        let queryResponse = await contract.evaluateTransaction('queryHistory', 'MagnetoCorp', '00001');
+        let queryResponse = await contract.evaluateTransaction('queryHistory', '71926100J', '00001');
 
         let json = JSON.parse(queryResponse.toString());
         console.log(json);
@@ -81,20 +81,20 @@ async function main() {
         console.log('-----------------------------------------------------------------------------------------\n\n');
 
         // 2 ownership query
-        console.log('2. Query Commercial Paper Ownership.... Papers owned by MagnetoCorp');
+        console.log('2. Query Certificate Ownership.... Certificates owned by ');
         console.log('-----------------------------------------------------------------------------------------\n');
-        let queryResponse2 = await contract.evaluateTransaction('queryOwner', 'MagnetoCorp');
+        let queryResponse2 = await contract.evaluateTransaction('queryOwner', '719260100J');
         json = JSON.parse(queryResponse2.toString());
         console.log(json);
 
         console.log('\n\n');
-        console.log('\n  Paper Ownership query complete.');
+        console.log('\n  Certificate Ownership query complete.');
         console.log('-----------------------------------------------------------------------------------------\n\n');
 
         // 3 partial key query
-        console.log('3. Query Commercial Paper Partial Key.... Papers in org.papernet.papers namespace and prefixed MagnetoCorp');
+        console.log('3. Query Certificate Paper Partial Key.... Papers in org.papernet.papers namespace and prefixed MagnetoCorp');
         console.log('-----------------------------------------------------------------------------------------\n');
-        let queryResponse3 = await contract.evaluateTransaction('queryPartial', 'MagnetoCorp');
+        let queryResponse3 = await contract.evaluateTransaction('queryPartial', '719260100J');
 
         json = JSON.parse(queryResponse3.toString());
         console.log(json);
@@ -113,12 +113,12 @@ async function main() {
         console.log(json);
         console.log('\n\n');
 
-        console.log('\n  Named query "redeemed" complete.');
+        console.log('\n  Named query "" complete.');
         console.log('-----------------------------------------------------------------------------------------\n\n');
 
 
         // 5 named query - by value
-        console.log('5. Named Query:.... All papers in org.papernet.papers with faceValue > 4000000');
+        console.log('5. Named Query:.... All papers in org.papernet.papers with examno > 40');
         console.log('-----------------------------------------------------------------------------------------\n');
         let queryResponse5 = await contract.evaluateTransaction('queryNamed', 'value');
 

@@ -65,10 +65,10 @@ class CommercialPaperContract extends Contract {
      * @param {String} maturityDateTime paper maturity date
      * @param {Integer} faceValue face value of paper
     */
-    async issue(ctx, issuer, paperNumber, issueDateTime, maturityDateTime, faceValue) {
+    async issue(ctx, issuer, certNumber, issueDateTime, maturityDateTime, examcode) {
 
         // create an instance of the paper
-        let paper = CommercialPaper.createInstance(issuer, paperNumber, issueDateTime, maturityDateTime, parseInt(faceValue));
+        let paper = CommercialPaper.createInstance(issuer, certNumber, issueDateTime, maturityDateTime, parseInt(examcode));
 
         // Smart contract, rather than paper, moves paper into ISSUED state
         paper.setIssued();
@@ -98,10 +98,10 @@ class CommercialPaperContract extends Contract {
       * @param {Integer} price price paid for this paper // transaction input - not written to asset
       * @param {String} purchaseDateTime time paper was purchased (i.e. traded)  // transaction input - not written to asset
      */
-    async buy(ctx, issuer, paperNumber, currentOwner, newOwner, price, purchaseDateTime) {
+    async buy(ctx, issuer, certNumber, currentOwner, newOwner, marks, examDateTime) {
 
         // Retrieve the current paper using key fields provided
-        let paperKey = CommercialPaper.makeKey([issuer, paperNumber]);
+        let paperKey = CommercialPaper.makeKey([issuer, certNumber]);
         let paper = await ctx.paperList.getPaper(paperKey);
 
         // Validate current owner
@@ -111,11 +111,11 @@ class CommercialPaperContract extends Contract {
 
         // First buy moves state from ISSUED to TRADING (when running )
         if (paper.isIssued()) {
-            paper.setTrading();
+            paper.setGranted();
         }
 
         // Check paper is not already REDEEMED
-        if (paper.isTrading()) {
+        if (paper.isGranted()) {
             paper.setOwner(newOwner);
             // save the owner's MSP 
             let mspid = ctx.clientIdentity.getMSPID();
@@ -251,12 +251,12 @@ class CommercialPaperContract extends Contract {
      * @param {String} issuer commercial paper issuer
      * @param {Integer} paperNumber paper number for this issuer
     */
-    async queryHistory(ctx, issuer, paperNumber) {
+    async queryHistory(ctx, issuer, certNumber) {
 
         // Get a key to be used for History query
 
         let query = new QueryUtils(ctx, 'org.papernet.paper');
-        let results = await query.getAssetHistory(issuer, paperNumber); // (cpKey);
+        let results = await query.getAssetHistory(issuer, certNumber); // (cpKey);
         return results;
 
     }
@@ -317,12 +317,12 @@ class CommercialPaperContract extends Contract {
             case "redeemed":
                 querySelector = { "selector": { "currentState": 4 } };  // 4 = redeemd state
                 break;
-            case "trading":
+            case "granted":
                 querySelector = { "selector": { "currentState": 3 } };  // 3 = trading state
                 break;
             case "value":
                 // may change to provide as a param - fixed value for now in this sample
-                querySelector = { "selector": { "faceValue": { "$gt": 4000000 } } };  // to test, issue CommPapers with faceValue <= or => this figure.
+                querySelector = { "selector": { "examname": { "$gt": 4000000 } } };  // to test, issue CommPapers with faceValue <= or => this figure.
                 break;
             default: // else, unknown named query
                 throw new Error('invalid named query supplied: ' + queryname + '- please try again ');

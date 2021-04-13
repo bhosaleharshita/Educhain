@@ -55,6 +55,14 @@ class CommercialPaper extends State {
         this.owner = newOwner;
     }
 
+    setMarks(mrks){
+    	this.marks=mrks;
+    }
+
+    getMarks(mrks){
+    	return this.marks;
+    }
+
     /**
      * Useful methods to encapsulate commercial paper states
      */
@@ -109,8 +117,8 @@ class CommercialPaper extends State {
     /**
      * Factory method to create a commercial paper object
      */
-    static createInstance(issuer, paperNumber, issueDateTime, maturityDateTime, faceValue) {
-        return new CommercialPaper({ issuer, paperNumber, issueDateTime, maturityDateTime, faceValue });
+    static createInstance(issuer, paperNumber, issueDateTime, maturityDateTime, examno, marks) {
+        return new CommercialPaper({ issuer, paperNumber, issueDateTime, maturityDateTime, examno, marks});
     }
 
     static getClass() {
