@@ -11,7 +11,7 @@ You can use the `./network.sh` script to stand up a simple Fabric test network. 
         2. ./network.sh createChannel
         -Output: 1 orderer container,3 CA container(one for each org),3 Peer Container(1 for each org),3 couchdb container(one for each peer)
               
-      Note: Delete the peerOrganization and ordererOrganization folders from  Orgaization Directory, Delete the uni,mhrd,thirdparty,orderer folders from fabric ca directory and         delete the contents of channel artifacts directory.
+      Note: Delete the peerOrganization and ordererOrganization folders from  Orgaization Directory, Delete the uni,mhrd,thirdparty,orderer folders from fabric ca directory and delete the contents of channel artifacts directory.
 
 
 ## Step 2: Packaging,Installing,Approving and commiting the chaincode on the network
@@ -43,7 +43,7 @@ After successfully performing above steps for each peer,perform the below step o
 - peer lifecycle chaincode commit -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --peerAddresses localhost:7051 --tlsRootCertFiles ${PEER0_uni_CA} --peerAddresses localhost:9051 --tlsRootCertFiles ${PEER0_mhrd_CA} --peerAddresses localhost:11051 --tlsRootCertFiles ${PEER0_thirdparty_CA} --channelID mychannel --name papercontract -v 0 --sequence 1 --tls --cafile $ORDERER_CA --waitForEvent
 
 
-# # Step 3 Setting Up the Node SDK
+## Step 3 Setting Up the Node SDK
 
 - copy the connection profiles of organizationsinto respective application folder 
 eg:

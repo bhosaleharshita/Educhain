@@ -11,10 +11,10 @@ const State = require('./../ledger-api/state.js');
 
 // Enumerate commercial paper state values
 const cpState = {
-    ISSUED: 1,
+    REGISTERED: 1,
     PENDING: 2,
-    TRADING: 3,
-    REDEEMED: 4
+    GRANTED: 3,
+    UPDATION: 4
 };
 
 /**
@@ -62,12 +62,12 @@ class CommercialPaper extends State {
         this.currentState = cpState.ISSUED;
     }
 
-    setTrading() {
-        this.currentState = cpState.TRADING;
+    setGranted() {
+        this.currentState = cpState.GRANTED;
     }
 
-    setRedeemed() {
-        this.currentState = cpState.REDEEMED;
+    setUpdation() {
+        this.currentState = cpState.UPDATION;
     }
 
     setPending() {
@@ -78,12 +78,12 @@ class CommercialPaper extends State {
         return this.currentState === cpState.ISSUED;
     }
 
-    isTrading() {
-        return this.currentState === cpState.TRADING;
+    isGranted() {
+        return this.currentState === cpState.GRANTED;
     }
 
-    isRedeemed() {
-        return this.currentState === cpState.REDEEMED;
+    isUpdation() {
+        return this.currentState === cpState.UPDATION;
     }
 
     isPending() {
@@ -109,8 +109,8 @@ class CommercialPaper extends State {
     /**
      * Factory method to create a commercial paper object
      */
-    static createInstance(issuer, paperNumber, issueDateTime, maturityDateTime, faceValue) {
-        return new CommercialPaper({ issuer, paperNumber, issueDateTime, maturityDateTime, faceValue });
+    static createInstance(issuer, certNumber, issueDateTime, maturityDateTime, examname) {
+        return new CommercialPaper({ issuer, certNumber, issueDateTime, maturityDateTime, examname });
     }
 
     static getClass() {

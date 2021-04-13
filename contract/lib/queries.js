@@ -26,9 +26,9 @@ class QueryUtils {
     * @param {String} issuer the CP issuer
     * @param {String} paperNumber commercial paper number
     */
-    async getAssetHistory(issuer, paperNumber) {
+    async getAssetHistory(issuer, certNumber) {
 
-        let ledgerKey = await this.ctx.stub.createCompositeKey(this.name, [issuer, paperNumber]);
+        let ledgerKey = await this.ctx.stub.createCompositeKey(this.name, [issuer, certNumber]);
         const resultsIterator = await this.ctx.stub.getHistoryForKey(ledgerKey);
         let results = await this.getAllResults(resultsIterator, true);
 

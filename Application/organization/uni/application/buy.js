@@ -27,7 +27,7 @@ const CommercialPaper = require('../../mhrd/contract/lib/paper.js');
 async function main () {
 
     // A wallet stores a collection of identities for use
-    const wallet = await Wallets.newFileSystemWallet('../identity/user/balaji/wallet');
+    const wallet = await Wallets.newFileSystemWallet('../identity/user/sppu/wallet');
 
 
     // A gateway defines the peers used to access Fabric networks
@@ -37,7 +37,7 @@ async function main () {
     try {
 
         // Specify userName for network access
-        const userName = 'balaji';
+        const userName = 'sppu';
 
         // Load connection profile; will be used to locate a gateway
         let connectionProfile = yaml.safeLoad(fs.readFileSync('../gateway/connection-uni.yaml', 'utf8'));
@@ -66,16 +66,16 @@ async function main () {
         const contract = await network.getContract('papercontract', 'org.papernet.commercialpaper');
 
         // buy commercial paper
-        console.log('Submit commercial paper buy transaction.');
+        console.log('Submit Grant transaction.');
 
-        const buyResponse = await contract.submitTransaction('buy', 'MagnetoCorp', '00001', 'MagnetoCorp', 'DigiBank', '4900000', '2020-05-31');
+        const buyResponse = await contract.submitTransaction('buy', '71926100J', '00001', '71926100J', 'sppu', '89', '2021-05-31');
 
         // process response
         console.log('Process buy transaction response.');
 
         let paper = CommercialPaper.fromBuffer(buyResponse);
 
-        console.log(`${paper.issuer} commercial paper : ${paper.paperNumber} successfully purchased by ${paper.owner}`);
+        console.log(`${paper.issuer} Certification : ${paper.paperNumber} successfully granted by ${paper.owner}`);
         console.log('Transaction complete.');
 
     } catch (error) {
@@ -93,11 +93,11 @@ async function main () {
 }
 main().then(() => {
 
-    console.log('Buy program complete.');
+    console.log('Grant program complete.');
 
 }).catch((e) => {
 
-    console.log('Buy program exception.');
+    console.log('Grant program exception.');
     console.log(e);
     console.log(e.stack);
     process.exit(-1);

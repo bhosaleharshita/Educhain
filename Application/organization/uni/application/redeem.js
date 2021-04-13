@@ -27,7 +27,7 @@ const CommercialPaper = require('../contract/lib/paper.js');
 async function main() {
 
   // A wallet stores a collection of identities for use
-  const wallet = await Wallets.newFileSystemWallet('../identity/user/balaji/wallet');
+  const wallet = await Wallets.newFileSystemWallet('../identity/user/sppu/wallet');
 
 
   // A gateway defines the peers used to access Fabric networks
@@ -38,10 +38,10 @@ async function main() {
 
     // Specify userName for network access
         // Specify userName for network access
-        const userName = 'balaji';
+        const userName = 'sppu';
 
     // Load connection profile; will be used to locate a gateway
-    let connectionProfile = yaml.safeLoad(fs.readFileSync('../gateway/connection-org1.yaml', 'utf8'));
+    let connectionProfile = yaml.safeLoad(fs.readFileSync('../gateway/connection-uni.yaml', 'utf8'));
 
     // Set connection options; identity and wallet
     let connectionOptions = {
@@ -68,7 +68,7 @@ async function main() {
     // redeem commercial paper
     console.log('Submit commercial paper redeem transaction.');
 
-    const redeemResponse = await contract.submitTransaction('redeem', 'MagnetoCorp', '00001', 'DigiBank', 'Org2MSP', '2020-11-30');
+    const redeemResponse = await contract.submitTransaction('redeem', '71926086J', '00001', 'sppu', 'uniMSP', '2020-11-30');
 
     // process response
     console.log('Process redeem transaction response.');
