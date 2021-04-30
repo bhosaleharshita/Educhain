@@ -60,19 +60,19 @@ async function main() {
         const network = await gateway.getNetwork('mychannel');
 
         // Get addressability to commercial paper contract
-        console.log('Use org.papernet.commercialpaper smart contract.');
+      //  console.log('Use org.papernet.commercialpaper smart contract.');
 
         const contract = await network.getContract('papercontract', 'org.papernet.commercialpaper');
 
         // queries - commercial paper
         console.log('-----------------------------------------------------------------------------------------');
-        console.log('****** Submitting commercial paper queries ****** \n\n ');
+        console.log('****** Submitting queries ****** \n\n ');
 
 
         // 1 asset history
         console.log('1. Query Certificate Paper History....');
         console.log('-----------------------------------------------------------------------------------------\n');
-        let queryResponse = await contract.evaluateTransaction('queryHistory', '71926100J', '00001');
+        let queryResponse = await contract.evaluateTransaction('queryHistory', '71926074H', '3010');
 
         let json = JSON.parse(queryResponse.toString());
         console.log(json);
@@ -83,7 +83,7 @@ async function main() {
         // 2 ownership query
         console.log('2. Query Certificate Ownership.... Certificates owned by ');
         console.log('-----------------------------------------------------------------------------------------\n');
-        let queryResponse2 = await contract.evaluateTransaction('queryOwner', '719260100J');
+        let queryResponse2 = await contract.evaluateTransaction('queryOwner', '71926074H');
         json = JSON.parse(queryResponse2.toString());
         console.log(json);
 
@@ -94,7 +94,7 @@ async function main() {
         // 3 partial key query
         console.log('3. Query Certificate Paper Partial Key.... Papers in org.papernet.papers namespace and prefixed MagnetoCorp');
         console.log('-----------------------------------------------------------------------------------------\n');
-        let queryResponse3 = await contract.evaluateTransaction('queryPartial', '719260100J');
+        let queryResponse3 = await contract.evaluateTransaction('queryPartial', '71926074H');
 
         json = JSON.parse(queryResponse3.toString());
         console.log(json);

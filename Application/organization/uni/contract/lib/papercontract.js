@@ -65,10 +65,10 @@ class CommercialPaperContract extends Contract {
      * @param {String} maturityDateTime paper maturity date
      * @param {Integer} faceValue face value of paper
     */
-    async issue(ctx, issuer, paperNumber, issueDateTime, maturityDateTime, examno) {
+    async issue(ctx, student_id, certNumber, registration_DateTime, approval_DateTime, examno) {
 
         // create an instance of the paper
-        let paper = CommercialPaper.createInstance(issuer, paperNumber, issueDateTime, maturityDateTime, parseInt(examno), 'NA');
+        let paper = CommercialPaper.createInstance(student_id, certNumber, registration_DateTime, approval_DateTime, parseInt(examno),'NA');
 
         // Smart contract, rather than paper, moves paper into ISSUED state
         paper.setIssued();
@@ -78,7 +78,7 @@ class CommercialPaperContract extends Contract {
         paper.setOwnerMSP(mspid);
 
         // Newly issued paper is owned by the issuer to begin with (recorded for reporting purposes)
-        paper.setOwner(issuer);
+        paper.setOwner(student_id);
 
         // Add the paper to the list of all similar commercial papers in the ledger world state
         await ctx.paperList.addPaper(paper);
@@ -98,15 +98,15 @@ class CommercialPaperContract extends Contract {
       * @param {Integer} price price paid for this paper // transaction input - not written to asset
       * @param {String} purchaseDateTime time paper was purchased (i.e. traded)  // transaction input - not written to asset
      */
-    async buy(ctx, issuer, paperNumber, currentOwner, newOwner, price, purchaseDateTime) {
+    async buy(ctx, student_id, certNumber, currentOwner, newOwner, marks, approval_DateTime) {
 
         // Retrieve the current paper using key fields provided
-        let paperKey = CommercialPaper.makeKey([issuer, paperNumber]);
+        let paperKey = CommercialPaper.makeKey([student_id, certNumber]);
         let paper = await ctx.paperList.getPaper(paperKey);
 
         // Validate current owner
         if (paper.getOwner() !== currentOwner) {
-            throw new Error('\nPaper ' + issuer + paperNumber + ' is not owned by ' + currentOwner);
+            throw new Error('\nPaper ' + student_id + certNumber + ' is not owned by ' + currentOwner);
         }
 
         // First buy moves state from ISSUED to TRADING (when running )
@@ -117,12 +117,12 @@ class CommercialPaperContract extends Contract {
         // Check paper is not already REDEEMED
         if (paper.isTrading()) {
             paper.setOwner(newOwner);
-            paper.setMarks(price);
+            paper.setMarks(marks);
             // save the owner's MSP 
             let mspid = ctx.clientIdentity.getMSPID();
             paper.setOwnerMSP(mspid);
         } else {
-            throw new Error('\nPaper ' + issuer + paperNumber + ' is not trading. Current state = ' + paper.getCurrentState());
+            throw new Error('\nPaper ' + student_id + certNumber + ' is not trading. Current state = ' + paper.getCurrentState());
         }
 
         // Update the paper
@@ -213,31 +213,32 @@ class CommercialPaperContract extends Contract {
      * @param {String} issuingOwnerMSP the MSP of the org that the paper will be redeemed with.
      * @param {String} redeemDateTime time paper was redeemed
     */
-    async redeem(ctx, issuer, paperNumber, redeemingOwner, issuingOwnerMSP, redeemDateTime) {
+    async redeem(ctx, student_id, certNumber, grantingOwner, studentOwnerMSP, grantDateTime,marks) {
 
-        let paperKey = CommercialPaper.makeKey([issuer, paperNumber]);
+        let paperKey = CommercialPaper.makeKey([student_id, certNumber]);
 
         let paper = await ctx.paperList.getPaper(paperKey);
 
         // Check paper is not alread in a state of REDEEMED
         if (paper.isRedeemed()) {
-            throw new Error('\nPaper ' + issuer + paperNumber + ' has already been redeemed');
+            throw new Error('\nPaper ' + student_id + certNumber + ' has already been granted');
         }
 
         // Validate current redeemer's MSP matches the invoking redeemer's MSP id - can only redeem if you are the owning org.
 
         if (paper.getOwnerMSP() !== ctx.clientIdentity.getMSPID()) {
-            throw new Error('\nPaper ' + issuer + paperNumber + ' cannot be redeemed by ' + ctx.clientIdentity.getMSPID() + ', as it is not the authorised owning Organisation');
+            throw new Error('\nPaper ' + student_id + certNumber + ' cannot be granted by ' + ctx.clientIdentity.getMSPID() + ', as it is not the authorised owning Organisation');
         }
 
         // As this is just a sample, can show additional verification check: that the redeemer provided matches that on record, before redeeming it
-        if (paper.getOwner() === redeemingOwner) {
+        if (paper.getOwner() === grantingOwner) {
             paper.setOwner(paper.getIssuer());
-            paper.setOwnerMSP(issuingOwnerMSP);
+            paper.setOwnerMSP(studentOwnerMSP);
             paper.setRedeemed();
-            paper.redeemDateTime = redeemDateTime; // record redemption date against the asset (the complement to 'issue date')
+            paper.setMarks(marks);
+            paper.grantDateTime = grantDateTime; // record redemption date against the asset (the complement to 'issue date')
         } else {
-            throw new Error('\nRedeeming owner: ' + redeemingOwner + ' organisation does not currently own paper: ' + issuer + paperNumber);
+            throw new Error('\nGranting owner: ' + grantingOwner + ' organisation does not currently own paper: ' + student_id + paperNumber);
         }
 
         await ctx.paperList.updatePaper(paper);
@@ -323,7 +324,7 @@ class CommercialPaperContract extends Contract {
                 break;
             case "value":
                 // may change to provide as a param - fixed value for now in this sample
-                querySelector = { "selector": { "faceValue": { "$gt": 4000000 } } };  // to test, issue CommPapers with faceValue <= or => this figure.
+                querySelector = { "selector": { "faceValue": { "$eq": 4001 } } };  // to test, issue CommPapers with faceValue <= or => this figure.
                 break;
             default: // else, unknown named query
                 throw new Error('invalid named query supplied: ' + queryname + '- please try again ');

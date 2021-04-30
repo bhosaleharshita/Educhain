@@ -11,11 +11,17 @@ const State = require('./../ledger-api/state.js');
 
 // Enumerate commercial paper state values
 const cpState = {
-    ISSUED: 1,
+    REGISTERED: 1,
     PENDING: 2,
-    TRADING: 3,
-    REDEEMED: 4
+    APPROVED: 3,
+    GRANTED: 4
 };
+
+/*
+ISSUED:REGISTERED:1
+TRADING:APPROVED BY CLG:3
+REDEEMED:GRANTED:4
+*/
 
 /**
  * CommercialPaper class extends State class
@@ -24,7 +30,7 @@ const cpState = {
 class CommercialPaper extends State {
 
     constructor(obj) {
-        super(CommercialPaper.getClass(), [obj.issuer, obj.paperNumber]);
+        super(CommercialPaper.getClass(), [obj.student_id, obj.certNumber]);
         Object.assign(this, obj);
     }
 
@@ -32,11 +38,11 @@ class CommercialPaper extends State {
      * Basic getters and setters
     */
     getIssuer() {
-        return this.issuer;
+        return this.student_id;
     }
 
     setIssuer(newIssuer) {
-        this.issuer = newIssuer;
+        this.student_id = newIssuer;
     }
 
     getOwner() {
@@ -67,15 +73,15 @@ class CommercialPaper extends State {
      * Useful methods to encapsulate commercial paper states
      */
     setIssued() {
-        this.currentState = cpState.ISSUED;
+        this.currentState = cpState.REGISTERED;
     }
 
     setTrading() {
-        this.currentState = cpState.TRADING;
+        this.currentState = cpState.APPROVED;
     }
 
     setRedeemed() {
-        this.currentState = cpState.REDEEMED;
+        this.currentState = cpState.GRANTED;
     }
 
     setPending() {
@@ -83,15 +89,15 @@ class CommercialPaper extends State {
     }
 
     isIssued() {
-        return this.currentState === cpState.ISSUED;
+        return this.currentState === cpState.REGISTERED;
     }
 
     isTrading() {
-        return this.currentState === cpState.TRADING;
+        return this.currentState === cpState.APPROVED;
     }
 
     isRedeemed() {
-        return this.currentState === cpState.REDEEMED;
+        return this.currentState === cpState.GRANTED;
     }
 
     isPending() {
@@ -117,8 +123,8 @@ class CommercialPaper extends State {
     /**
      * Factory method to create a commercial paper object
      */
-    static createInstance(issuer, paperNumber, issueDateTime, maturityDateTime, examno, marks) {
-        return new CommercialPaper({ issuer, paperNumber, issueDateTime, maturityDateTime, examno, marks});
+    static createInstance(student_id, certNumber, registration_DateTime, approval_DateTime, examno, marks) {
+        return new CommercialPaper({student_id, certNumber, registration_DateTime, approval_DateTime, examno, marks});
     }
 
     static getClass() {
