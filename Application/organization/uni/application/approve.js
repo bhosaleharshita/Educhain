@@ -9,7 +9,7 @@
  * 1. Select an identity from a wallet
  * 2. Connect to network gateway
  * 3. Access PaperNet network
- * 4. Construct request to issue commercial paper
+ * 4. Construct request to buy commercial paper
  * 5. Submit transaction
  * 6. Process response
  */
@@ -20,13 +20,15 @@
 const fs = require('fs');
 const yaml = require('js-yaml');
 const { Wallets, Gateway } = require('fabric-network');
-const CommercialPaper = require('../contract/lib/paper.js');
+const CommercialPaper = require('../../mhrd/contract/lib/paper.js');
+
 
 // Main program function
-async function main() {
+async function main () {
 
     // A wallet stores a collection of identities for use
-    const wallet = await Wallets.newFileSystemWallet('../identity/user/isabella/wallet');
+    const wallet = await Wallets.newFileSystemWallet('../identity/user/scoe/wallet');
+
 
     // A gateway defines the peers used to access Fabric networks
     const gateway = new Gateway();
@@ -35,17 +37,17 @@ async function main() {
     try {
 
         // Specify userName for network access
-        // const userName = 'isabella.issuer@magnetocorp.com';
-        const userName = 'isabella';
+        const userName = 'scoe';
 
         // Load connection profile; will be used to locate a gateway
-        let connectionProfile = yaml.safeLoad(fs.readFileSync('../gateway/connection-mhrd.yaml', 'utf8'));
+        let connectionProfile = yaml.safeLoad(fs.readFileSync('../gateway/connection-uni.yaml', 'utf8'));
 
         // Set connection options; identity and wallet
         let connectionOptions = {
             identity: userName,
             wallet: wallet,
-            discovery: { enabled:true, asLocalhost: true }
+            discovery: { enabled: true, asLocalhost: true }
+
         };
 
         // Connect to gateway using application specified parameters
@@ -59,21 +61,24 @@ async function main() {
         const network = await gateway.getNetwork('mychannel');
 
         // Get addressability to commercial paper contract
-        console.log('Use org.papernet.commercialpaper smart contract.');
+        //console.log('Use org.papernet.commercialpaper smart contract.');
 
-        const contract = await network.getContract('papercontract');
+        const contract = await network.getContract('papercontract', 'org.papernet.commercialpaper');
 
-        // issue commercial paper
-        console.log('Submit commercial paper issue transaction.');
+        // buy commercial paper
+        console.log('Submit Approve transaction.');
 
-        const issueResponse = await contract.submitTransaction('issue', '71926100J', '00001', '2020-05-31', '2020-11-30', '40001');
+        //ed (i.e. traded)  // transaction input - not written to asset
+     
+    //async buy(ctx, student, certNumber, currentOwner, newOwner(University), marks, approveDateTime)
+        const buyResponse = await contract.submitTransaction('buy', '71926074H', '3010', '71926074H', 'sppu', 'NA', '2021-05-31');
 
         // process response
-        console.log('Process issue transaction response.'+issueResponse);
+        console.log('Process approve transaction response.');
 
-        let paper = CommercialPaper.fromBuffer(issueResponse);
+        let paper = CommercialPaper.fromBuffer(buyResponse);
 
-        console.log(`${paper.issuer} Registration done : ${paper.paperNumber} successfully  for exam no: ${paper.faceValue}`);
+        console.log(`${paper.issuer} Exam Form No.: ${paper.paperNumber} Approved by scoe`);
         console.log('Transaction complete.');
 
     } catch (error) {
@@ -91,11 +96,11 @@ async function main() {
 }
 main().then(() => {
 
-    console.log('Issue program complete.');
+    console.log('Approve program complete.');
 
 }).catch((e) => {
 
-    console.log('Issue program exception.');
+    console.log('Approve program exception.');
     console.log(e);
     console.log(e.stack);
     process.exit(-1);

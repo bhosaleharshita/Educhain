@@ -24,14 +24,14 @@ async function main() {
         const ca = new FabricCAServices(caInfo.url, { trustedRoots: caTLSCACerts, verify: false }, caInfo.caName);
 
         // Create a new file system based wallet for managing identities.
-        const walletPath = path.join(process.cwd(), '../identity/user/isabella/wallet');
+        const walletPath = path.join(process.cwd(), '../identity/user/71926074H/wallet');
         const wallet = await Wallets.newFileSystemWallet(walletPath);
         console.log(`Wallet path: ${walletPath}`);
 
         // Check to see if we've already enrolled the admin user.
-        const userExists = await wallet.get('isabella');
+        const userExists = await wallet.get('71926074H');
         if (userExists) {
-            console.log('An identity for the client user "user1" already exists in the wallet');
+            console.log('An identity for the Student "user1" already exists in the wallet');
             return;
         }
 
@@ -45,11 +45,11 @@ async function main() {
             mspId: 'mhrdMSP',
             type: 'X.509',
         };
-        await wallet.put('isabella', x509Identity);
-        console.log('Successfully enrolled client user "isabella" and imported it into the wallet');
+        await wallet.put('71926074H', x509Identity);
+        console.log('Successfully enrolled Student "71926074H" and  wallet created');
 
     } catch (error) {
-        console.error(`Failed to enroll client user "isabella": ${error}`);
+        console.error(`Failed to enroll Student "71926074H": ${error}`);
         process.exit(1);
     }
 }

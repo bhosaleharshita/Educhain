@@ -60,19 +60,19 @@ async function main() {
         const network = await gateway.getNetwork('mychannel');
 
         // Get addressability to commercial paper contract
-        console.log('Use org.papernet.commercialpaper smart contract.');
+        //console.log('Use org.papernet.commercialpaper smart contract.');
 
         const contract = await network.getContract('papercontract', 'org.papernet.commercialpaper');
 
         // queries - commercial paper
         console.log('-----------------------------------------------------------------------------------------');
-        console.log('****** Submitting commercial paper queries ****** \n\n ');
+        console.log('****** Submitting certificate queries ****** \n\n ');
 
 
         // 1 asset history
         console.log('1. Query Certificate Paper History....');
         console.log('-----------------------------------------------------------------------------------------\n');
-        let queryResponse = await contract.evaluateTransaction('queryHistory', '71926100J', '00001');
+        let queryResponse = await contract.evaluateTransaction('queryHistory', '71926100J', '1002');
 
         let json = JSON.parse(queryResponse.toString());
         console.log(json);
@@ -81,9 +81,9 @@ async function main() {
         console.log('-----------------------------------------------------------------------------------------\n\n');
 
         // 2 ownership query
-        console.log('2. Query Certificate Ownership.... Certificates owned by ');
+        console.log('2. Query Certificate Ownership.... Certificates owned by 71926100J');
         console.log('-----------------------------------------------------------------------------------------\n');
-        let queryResponse2 = await contract.evaluateTransaction('queryOwner', '719260100J');
+        let queryResponse2 = await contract.evaluateTransaction('queryOwner', '71926100J');
         json = JSON.parse(queryResponse2.toString());
         console.log(json);
 
@@ -92,7 +92,7 @@ async function main() {
         console.log('-----------------------------------------------------------------------------------------\n\n');
 
         // 3 partial key query
-        console.log('3. Query Certificate Paper Partial Key.... Papers in org.papernet.papers namespace and prefixed MagnetoCorp');
+        console.log('3. Query Certificate Paper Partial Key.... Certificates in org.certnetnet.certificates namespace and prefixed MagnetoCorp');
         console.log('-----------------------------------------------------------------------------------------\n');
         let queryResponse3 = await contract.evaluateTransaction('queryPartial', '719260100J');
 
@@ -105,7 +105,7 @@ async function main() {
 
 
         // 4 Named query - all redeemed papers
-        console.log('4. Named Query: ... All papers in org.papernet.papers that are in current state of redeemed');
+        console.log('4. Named Query: ... All papers in org.certnetnet.certificates that are in current state of granted');
         console.log('-----------------------------------------------------------------------------------------\n');
         let queryResponse4 = await contract.evaluateTransaction('queryNamed', 'redeemed');
 
@@ -118,7 +118,7 @@ async function main() {
 
 
         // 5 named query - by value
-        console.log('5. Named Query:.... All papers in org.papernet.papers with examno > 40');
+        console.log('5. Named Query:.... All papers in org.certnetnet.certificates = 4001');
         console.log('-----------------------------------------------------------------------------------------\n');
         let queryResponse5 = await contract.evaluateTransaction('queryNamed', 'value');
 

@@ -61,21 +61,21 @@ async function main() {
     const network = await gateway.getNetwork('mychannel');
 
     // Get addressability to commercial paper contract
-    console.log('Use org.papernet.commercialpaper smart contract.');
+    //console.log('Use org.papernet.commercialpaper smart contract.');
 
     const contract = await network.getContract('papercontract', 'org.papernet.commercialpaper');
 
     // redeem commercial paper
-    console.log('Submit commercial paper redeem transaction.');
+    console.log('Submit Grant transaction.');
 
-    const redeemResponse = await contract.submitTransaction('redeem', '71926086J', '00001', 'sppu', 'uniMSP', '2020-11-30');
+    const redeemResponse = await contract.submitTransaction('redeem', '71926074H', '3010', 'sppu', 'mhrdMSP', '2020-11-30','89');
 
     // process response
-    console.log('Process redeem transaction response.');
+    console.log('Process Grant transaction response.');
 
     let paper = CommercialPaper.fromBuffer(redeemResponse);
 
-    console.log(`${paper.issuer} commercial paper : ${paper.paperNumber} successfully redeemed with ${paper.owner}`);
+    console.log(`${paper.issuer} Certificate : ${paper.paperNumber} successfully granted with ${paper.owner}`);
 
     console.log('Transaction complete.');
 

@@ -169,16 +169,16 @@ class QueryUtils {
                             // report the commercial paper states during the asset lifecycle, just for asset history reporting
                             switch (jsonRes.Value.currentState) {
                                 case 1:
-                                    jsonRes.Value.currentState = 'ISSUED';
+                                    jsonRes.Value.currentState = 'REGISTERED';
                                     break;
                                 case 2:
                                     jsonRes.Value.currentState = 'PENDING';
                                     break;
                                 case 3:
-                                    jsonRes.Value.currentState = 'TRADING';
+                                    jsonRes.Value.currentState = 'APPROVED';
                                     break;
                                 case 4:
-                                    jsonRes.Value.currentState = 'REDEEMED';
+                                    jsonRes.Value.currentState = 'GRANTED';
                                     break;
                                 default: // else, unknown named query
                                     jsonRes.Value.currentState = 'UNKNOWN';
