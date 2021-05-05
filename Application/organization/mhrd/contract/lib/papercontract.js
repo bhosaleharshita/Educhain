@@ -65,10 +65,10 @@ class CommercialPaperContract extends Contract {
      * @param {String} maturityDateTime paper maturity date
      * @param {Integer} faceValue face value of paper
     */
-    async issue(ctx, student_id, certNumber, registration_DateTime, approval_DateTime, examno) {
+    async issue(ctx, student_id, certNumber, registration_DateTime, college_name, examno) {
 
         // create an instance of the paper
-        let paper = CommercialPaper.createInstance(student_id, certNumber, registration_DateTime, approval_DateTime, parseInt(examno),'NA');
+        let paper = CommercialPaper.createInstance(student_id, certNumber, registration_DateTime, college_name, parseInt(examno),'NA');
 
         // Smart contract, rather than paper, moves paper into ISSUED state
         paper.setIssued();
@@ -98,15 +98,15 @@ class CommercialPaperContract extends Contract {
       * @param {Integer} price price paid for this paper // transaction input - not written to asset
       * @param {String} purchaseDateTime time paper was purchased (i.e. traded)  // transaction input - not written to asset
      */
-    async buy(ctx, student_id, certNumber, currentOwner, newOwner, marks, approval_DateTime) {
+    async buy(ctx, student_id, certNumber, collegename, newOwner, marks, approval_DateTime) {
 
         // Retrieve the current paper using key fields provided
         let paperKey = CommercialPaper.makeKey([student_id, certNumber]);
         let paper = await ctx.paperList.getPaper(paperKey);
 
         // Validate current owner
-        if (paper.getOwner() !== currentOwner) {
-            throw new Error('\nPaper ' + student_id + certNumber + ' is not owned by ' + currentOwner);
+        if (paper.getcollege() !== collegename) {
+            throw new Error('\nPaper ' + student_id + ' this certificate is not issued through ' + collegename);
         }
 
         // First buy moves state from ISSUED to TRADING (when running )

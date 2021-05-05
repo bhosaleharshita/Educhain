@@ -34,6 +34,7 @@ CAPEM=organizations/peerOrganizations/uni.example.com/ca/ca.uni.example.com-cert
 
 echo "$(json_ccp $ORG $P0PORT $CAPORT $PEERPEM $CAPEM)" > organizations/peerOrganizations/uni.example.com/connection-uni.json
 echo "$(yaml_ccp $ORG $P0PORT $CAPORT $PEERPEM $CAPEM)" > organizations/peerOrganizations/uni.example.com/connection-uni.yaml
+echo "$(yaml_ccp $ORG $P0PORT $CAPORT $PEERPEM $CAPEM)" > Application/organisation/uni/gateway/connection-uni.yaml
 
 ORG=mhrd
 P0PORT=9051
@@ -43,6 +44,8 @@ CAPEM=organizations/peerOrganizations/mhrd.example.com/ca/ca.mhrd.example.com-ce
 
 echo "$(json_ccp $ORG $P0PORT $CAPORT $PEERPEM $CAPEM)" > organizations/peerOrganizations/mhrd.example.com/connection-mhrd.json
 echo "$(yaml_ccp $ORG $P0PORT $CAPORT $PEERPEM $CAPEM)" > organizations/peerOrganizations/mhrd.example.com/connection-mhrd.yaml
+echo "$(yaml_ccp $ORG $P0PORT $CAPORT $PEERPEM $CAPEM)" > ../Application/organisation/mhrd/gateway/connection-mhrd.yaml
+
 
 ORG=thirdparty
 P0PORT=11051
@@ -52,4 +55,5 @@ CAPEM=organizations/peerOrganizations/thirdparty.example.com/ca/ca.thirdparty.ex
 
 echo "$(json_ccp $ORG $P0PORT $CAPORT $PEERPEM $CAPEM)" > organizations/peerOrganizations/thirdparty.example.com/connection-thirdparty.json
 echo "$(yaml_ccp $ORG $P0PORT $CAPORT $PEERPEM $CAPEM)" > organizations/peerOrganizations/thirdparty.example.com/connection-thirdparty.yaml
+echo "$(yaml_ccp $ORG $P0PORT $CAPORT $PEERPEM $CAPEM)" > ../Application/organisation/thirdparty/gateway/connection-thirdparty.yaml
 

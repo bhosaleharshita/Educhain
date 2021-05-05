@@ -70,15 +70,15 @@ async function main () {
 
         //ed (i.e. traded)  // transaction input - not written to asset
      
-    //async buy(ctx, student, certNumber, currentOwner, newOwner(University), marks, approveDateTime)
-        const buyResponse = await contract.submitTransaction('buy', '71926074H', '3010', '71926074H', 'sppu', 'NA', '2021-05-31');
+    //async buy(ctx, student, certNumber, collegename, newOwner(University), marks, approveDateTime)
+        const buyResponse = await contract.submitTransaction('buy', '71926074H', '9010', 'scoe', 'sppu', 'NA', '2021-05-31');
 
         // process response
         console.log('Process approve transaction response.');
 
         let paper = CommercialPaper.fromBuffer(buyResponse);
 
-        console.log(`${paper.issuer} Exam Form No.: ${paper.paperNumber} Approved by scoe`);
+        console.log(`${paper.student_id} Exam Form No.: ${paper.certNumber} Approved by scoe`);
         console.log('Transaction complete.');
 
     } catch (error) {

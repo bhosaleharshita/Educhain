@@ -72,7 +72,7 @@ async function main() {
         // 1 asset history
         console.log('1. Query Certificate Paper History....');
         console.log('-----------------------------------------------------------------------------------------\n');
-        let queryResponse = await contract.evaluateTransaction('queryHistory', '71926100J', '1002');
+        let queryResponse = await contract.evaluateTransaction('queryHistory', '71926074H', '9010');
 
         let json = JSON.parse(queryResponse.toString());
         console.log(json);
@@ -81,9 +81,9 @@ async function main() {
         console.log('-----------------------------------------------------------------------------------------\n\n');
 
         // 2 ownership query
-        console.log('2. Query Certificate Ownership.... Certificates owned by 71926100J');
+        console.log('2. Query Certificate Ownership.... Certificates owned by 71926074H');
         console.log('-----------------------------------------------------------------------------------------\n');
-        let queryResponse2 = await contract.evaluateTransaction('queryOwner', '71926100J');
+        let queryResponse2 = await contract.evaluateTransaction('queryOwner', '71926074H');
         json = JSON.parse(queryResponse2.toString());
         console.log(json);
 
@@ -94,7 +94,7 @@ async function main() {
         // 3 partial key query
         console.log('3. Query Certificate Paper Partial Key.... Certificates in org.certnetnet.certificates namespace and prefixed MagnetoCorp');
         console.log('-----------------------------------------------------------------------------------------\n');
-        let queryResponse3 = await contract.evaluateTransaction('queryPartial', '719260100J');
+        let queryResponse3 = await contract.evaluateTransaction('queryPartial', '719260074H');
 
         json = JSON.parse(queryResponse3.toString());
         console.log(json);
@@ -118,7 +118,7 @@ async function main() {
 
 
         // 5 named query - by value
-        console.log('5. Named Query:.... All papers in org.certnetnet.certificates = 4001');
+        //console.log('5. Named Query:.... All papers in org.certnetnet.certificates = 4001');
         console.log('-----------------------------------------------------------------------------------------\n');
         let queryResponse5 = await contract.evaluateTransaction('queryNamed', 'value');
 
