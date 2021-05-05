@@ -72,7 +72,7 @@ async function main() {
         // 1 asset history
         console.log('1. Query Certificate Paper History....');
         console.log('-----------------------------------------------------------------------------------------\n');
-        let queryResponse = await contract.evaluateTransaction('queryHistory', '71926074H', '3010');
+        let queryResponse = await contract.evaluateTransaction('queryHistory', '71926074H', '9010');
 
         let json = JSON.parse(queryResponse.toString());
         console.log(json);

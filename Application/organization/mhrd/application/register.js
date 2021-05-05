@@ -59,21 +59,21 @@ async function main() {
         const network = await gateway.getNetwork('mychannel');
 
         // Get addressability to commercial paper contract
-       // console.log('Use org.papernet.commercialpaper smart contract.');
+       console.log('Use org.papernet.commercialpaper smart contract.');
 
         const contract = await network.getContract('papercontract');
 
         // issue commercial paper
         console.log('Submit Exam Registration transaction.');
 
-        const issueResponse = await contract.submitTransaction('issue', '71926074H', '3010', '2020-05-31', '2020-11-30', '40001');
+        const issueResponse = await contract.submitTransaction('issue', '71926074H', '9010', '2020-05-31', 'scoe', '40001');
 
         // process response
         console.log('Process Registration transaction response.'+issueResponse);
 
         let paper = CommercialPaper.fromBuffer(issueResponse);
 
-        console.log(`${paper.issuer} your Registration is successfull Unique_No: ${paper.certNumber} for exam no: ${paper.examno}`);
+        console.log(`${paper.student_id} your Registration is successfull with Unique_Reg_No: ${paper.certNumber} for exam no: ${paper.examno}`);
         console.log('Transaction complete.');
 
     } catch (error) {

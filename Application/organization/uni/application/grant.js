@@ -68,14 +68,14 @@ async function main() {
     // redeem commercial paper
     console.log('Submit Grant transaction.');
 
-    const redeemResponse = await contract.submitTransaction('redeem', '71926074H', '3010', 'sppu', 'mhrdMSP', '2020-11-30','89');
+    const redeemResponse = await contract.submitTransaction('redeem', '71926074H', '9010', 'sppu', 'mhrdMSP', '2020-11-30','89');
 
     // process response
     console.log('Process Grant transaction response.');
 
     let paper = CommercialPaper.fromBuffer(redeemResponse);
 
-    console.log(`${paper.issuer} Certificate : ${paper.paperNumber} successfully granted with ${paper.owner}`);
+    console.log(`${paper.student_id} Certificate : ${paper.certNumber} successfully granted with ${paper.owner}`);
 
     console.log('Transaction complete.');
 

@@ -23,14 +23,14 @@ async function main() {
         const ca = new FabricCAServices(caInfo.url, { trustedRoots: caTLSCACerts, verify: false }, caInfo.caName);
 
         // Create a new file system based wallet for managing identities.
-        const walletPath = path.join(process.cwd(), '../identity/user/sppu/wallet');
+        const walletPath = path.join(process.cwd(), '../identity/user/scoe/wallet');
         const wallet = await Wallets.newFileSystemWallet(walletPath);
         console.log(`Wallet path: ${walletPath}`);
 
         // Check to see if we've already enrolled the admin user.
-        const userExists = await wallet.get('sppu');
+        const userExists = await wallet.get('scoe');
         if (userExists) {
-            console.log('An identity for the client user "sppu" already exists in the wallet');
+            console.log('An identity for the client user "scoe" already exists in the wallet');
             return;
         }
 
@@ -44,11 +44,11 @@ async function main() {
             mspId: 'uniMSP',
             type: 'X.509',
         };
-        await wallet.put('sppu', x509Identity);
-        console.log('Successfully enrolled client user "sppu" and imported it into the wallet');
+        await wallet.put('scoe', x509Identity);
+        console.log('Successfully enrolled client user "scoe" and imported it into the wallet');
 
     } catch (error) {
-        console.error(`Failed to enroll client user "sppu": ${error}`);
+        console.error(`Failed to enroll client user "scoe": ${error}`);
         process.exit(1);
     }
 }
