@@ -67,11 +67,12 @@ copy educhain/organization/peerorganization/uni.example.com/connection-uni.yaml 
 
 - run followings (do this on all 3 prompts )
 
---npm install ejs
---npm install express --save
---npm install cors
---npm install express-session
+- npm install ejs
+- npm install express --save
+- npm install cors
+- npm install express-session
 
+//Start UI 
 - run node index.js
 
 
