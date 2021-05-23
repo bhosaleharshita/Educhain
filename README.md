@@ -61,6 +61,19 @@ copy educhain/organization/peerorganization/uni.example.com/connection-uni.yaml 
 - on uni prompt can run node buy.js /queryapp.js
 - on thirdparty promprt can run  queryapp.js
 
+## Step 4 Set up UI needs
+
+- CD to \Educhain\Application\organization\mhrd || uni ||thirdparty\application
+
+- run followings (do this on all 3 prompts )
+
+npm install ejs
+npm install express --save
+npm install cors
+npm install express-session
+
+- run node index.js
+
 
 
 
