@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Educhain</title>
+
+
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="../assets/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <link rel="stylesheet" href="../assets/vendors/flag-icon-css/css/flag-icon.min.css">
+  <link rel="stylesheet" href="../assets/vendors/jvectormap/jquery-jvectormap.css">
+  <!-- End plugin css for this page -->
+  <!-- Layout styles -->
+  <link rel="stylesheet" href="../assets/css/demo/style.css">
+  <!-- End layout styles -->
+  <link rel="shortcut icon" href="../assets/images/favicon.png" />
+
+  <script>
+  
+  $(window).on('load',function(){
+    var delayMs = 1500; // delay in milliseconds
+    
+    setTimeout(function(){
+        $('#myModal').modal('show');
+    }, delayMs);
+});
+  </script>
+
+
+</head>
+<body>
+
+
+
+<script src="../assets/js/preloader.js"></script>
+  <div class="body-wrapper">
+    <!-- partial:partials/_sidebar.html -->
+    <aside class="mdc-drawer mdc-drawer--dismissible mdc-drawer--open">
+      <div class="mdc-drawer__header">
+        <a href="index.html" class="brand-logo">
+          <img src="../assets/images/logo_new.png" alt="logo" width="170" height="45">
+        </a>
+      </div>
+      <div class="mdc-drawer__content">
+       
+        <div class="mdc-list-group">
+          <nav class="mdc-list mdc-drawer-menu">
+
+            <div class="user-info">
+            <p class="name">University Admin</p>
+            <p class="email">uniadmin@educhain.edu</p>
+            </div>
+
+            <div class="mdc-list-item mdc-drawer-item">
+              <a class="mdc-drawer-link" href="home.html">
+                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">home</i>
+                Dashboard
+              </a>
+            </div>
+
+            <div class="mdc-list-item mdc-drawer-item">
+              <a class="mdc-drawer-link" href="login.html">
+                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">person</i>
+                Login
+              </a>
+            </div>
+
+            <div class="mdc-list-item mdc-drawer-item">
+              <!--<a class="mdc-drawer-link" href="pages/charts/chartjs.html">-->
+                <a class="mdc-drawer-link" href="approveform.html">
+                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">verified_user</i>
+                Approve
+              </a>
+            </div>
+
+            <div class="mdc-list-item mdc-drawer-item">
+              <!--<a class="mdc-drawer-link" href="pages/charts/chartjs.html">-->
+                <a class="mdc-drawer-link" href="approveform.html">
+                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">visibility</i>
+                View Transactions
+              </a>
+            </div>
+
+            <div class="mdc-list-item mdc-drawer-item">
+              <!--<a class="mdc-drawer-link" href="pages/charts/chartjs.html">-->
+                <a class="mdc-drawer-link" href="UserForm.html">
+                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">person_add</i>
+                Enroll User
+              </a>
+            </div>            
+          </nav>
+        </div>
+        <div class="profile-actions">
+          <a href="javascript:;">Settings</a>
+          <span class="divider"></span>
+          <a href="javascript:;">Logout</a>
+        </div>
+        
+      </div>
+    </aside>
+    <!-- partial -->
+    <div class="main-wrapper mdc-drawer-app-content">
+      <!-- partial:partials/_navbar.html -->
+      <header class="mdc-top-app-bar">
+        <div class="mdc-top-app-bar__row">
+          <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+            <button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button sidebar-toggler">menu</button>
+            <span class="mdc-top-app-bar__title">Greetings Users!</span>
+            <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon search-text-field d-none d-md-flex">
+              <i class="material-icons mdc-text-field__icon">search</i>
+              <input class="mdc-text-field__input" id="text-field-hero-input">
+              <div class="mdc-notched-outline">
+                <div class="mdc-notched-outline__leading"></div>
+                <div class="mdc-notched-outline__notch">
+                  <label for="text-field-hero-input" class="mdc-floating-label">Search..</label>
+                </div>
+                <div class="mdc-notched-outline__trailing"></div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+
+
+<div class="modal hide fade" id="myModal">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">My Modal</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h5>Add content here.</h5>
+                <p>This is a vertically centered modal. Modal body text goes here. This content can be whatever you'd like. Text, images, forms, etc.. can be added here in the modal body.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary mx-auto" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+      </header>
+      <!-- partial -->
+      <div class="page-wrapper mdc-toolbar-fixed-adjust">
+        <main class="content-wrapper">
+          <div class="mdc-layout-grid">
+            <div class="mdc-layout-grid__inner">
+              <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-3-desktop mdc-layout-grid__cell--span-4-tablet">
+                <div class="mdc-card info-card info-card--success">
+                  <div class="card-inner">
+                    <h5 class="card-title">Borrowed</h5>
+                    <h5 class="font-weight-light pb-2 mb-1 border-bottom">$62,0076.00</h5>
+                    <p class="tx-12 text-muted">48% target reached</p>
+                    <div class="card-icon-wrapper">
+                      <i class="material-icons">dvr</i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-3-desktop mdc-layout-grid__cell--span-4-tablet">
+                <div class="mdc-card info-card info-card--danger">
+                  <div class="card-inner">
+                    <h5 class="card-title">Annual Profit</h5>
+                    <h5 class="font-weight-light pb-2 mb-1 border-bottom">$1,958,104.00</h5>
+                    <p class="tx-12 text-muted">55% target reached</p>
+                    <div class="card-icon-wrapper">
+                      <i class="material-icons">attach_money</i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-3-desktop mdc-layout-grid__cell--span-4-tablet">
+                <div class="mdc-card info-card info-card--primary">
+                  <div class="card-inner">
+                    <h5 class="card-title">Lead Conversion</h5>
+                    <h5 class="font-weight-light pb-2 mb-1 border-bottom">$234,769.00</h5>
+                    <p class="tx-12 text-muted">87% target reached</p>
+                    <div class="card-icon-wrapper">
+                      <i class="material-icons">trending_up</i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-3-desktop mdc-layout-grid__cell--span-4-tablet">
+                <div class="mdc-card info-card info-card--info">
+                  <div class="card-inner">
+                    <h5 class="card-title">Average Income</h5>
+                    <h5 class="font-weight-light pb-2 mb-1 border-bottom">$1,200.00</h5>
+                    <p class="tx-12 text-muted">87% target reached</p>
+                    <div class="card-icon-wrapper">
+                      <i class="material-icons">credit_card</i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+        </main>
+        <!-- partial:partials/_footer.html -->
+        <footer>
+          <div class="mdc-layout-grid">
+            <div class="mdc-layout-grid__inner">
+              <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                <span class="text-center text-sm-left d-block d-sm-inline-block tx-14">Copyright © <a href="https://www.bootstrapdash.com/" target="_blank">bootstrapdash.com </a>2020</span>
+              </div>
+              <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop d-flex justify-content-end">
+                <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center tx-14">Free <a href="https://www.bootstrapdash.com/material-design-dashboard/" target="_blank"> material admin </a> dashboards from Bootstrapdash.com</span>
+              </div>
+            </div>
+          </div>
+        </footer>
+        <!-- partial -->
+      </div>
+    </div>
+  </div>
+  <!-- plugins:js -->
+  <script src="../assets/vendors/js/vendor.bundle.base.js"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page-->
+  <script src="../assets/vendors/chartjs/Chart.min.js"></script>
+  <script src="../assets/vendors/jvectormap/jquery-jvectormap.min.js"></script>
+  <script src="../assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+  <!-- End plugin js for this page-->
+  <!-- inject:js -->
+  <script src="../assets/js/material.js"></script>
+  <script src="../assets/js/misc.js"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <script src="../assets/js/dashboard.js"></script>
+  <!-- End custom js for this page-->
+</body>
+</html> 

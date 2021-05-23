@@ -24,7 +24,7 @@ const CommercialPaper = require('../../mhrd/contract/lib/paper.js');
 
 
 // Main program function
-async function main () {
+async function main (prn, certiNo, clg, marks) {
 
     // A wallet stores a collection of identities for use
     const wallet = await Wallets.newFileSystemWallet('../identity/user/scoe/wallet');
@@ -70,8 +70,11 @@ async function main () {
 
         //ed (i.e. traded)  // transaction input - not written to asset
      
+        var today = new Date().toISOString().slice(0, 10)
+        //console.log(today);
+
     //async buy(ctx, student, certNumber, collegename, newOwner(University), marks, approveDateTime)
-        const buyResponse = await contract.submitTransaction('buy', '71926074H', '9010', 'scoe', 'sppu', 'NA', '2021-05-31');
+        const buyResponse = await contract.submitTransaction('buy', prn, certiNo, clg, 'sppu', marks, today);
 
         // process response
         console.log('Process approve transaction response.');
@@ -82,21 +85,25 @@ async function main () {
         console.log('Transaction complete.');
 
     } catch (error) {
-
-        console.log(`Error processing transaction. ${error}`);
+        console.error(`Certificate No. ${certiNo} : already approve ${error}`);
         console.log(error.stack);
+        //console.log(error);
+        throw new Error(error);
+        //process.exit(-1);
+    }   
 
-    } finally {
-
+        //finally {
         // Disconnect from the gateway
-        console.log('Disconnect from Fabric gateway.');
-        gateway.disconnect();
+        //console.log('Disconnect from Fabric gateway.');
+        //gateway.disconnect();
 
-    }
+    //}
 }
+
+/*
 main().then(() => {
 
-    console.log('Approve program complete.');
+    console.log('Approve program complete.'); 
 
 }).catch((e) => {
 
@@ -104,5 +111,10 @@ main().then(() => {
     console.log(e);
     console.log(e.stack);
     process.exit(-1);
-
 });
+
+*/
+
+
+module.exports.execute = main;
+

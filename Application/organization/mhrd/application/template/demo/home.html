@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Educhain</title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <!--
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>-->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  
+  <!-- imp-->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="../assets/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="../assets/vendors/css/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <link rel="stylesheet" href="../assets/vendors/flag-icon-css/css/flag-icon.min.css">
+  <link rel="stylesheet" href="../assets/vendors/jvectormap/jquery-jvectormap.css">
+  <!-- End plugin css for this page -->
+  <!-- Layout styles -->
+  <link rel="stylesheet" href="../assets/css/demo/style.css">
+  <!-- End layout styles -->
+  <link rel="shortcut icon" href="../assets/images/favicon.png" />
+
+  <script>
+  
+  $(window).on('load',function(){
+    var delayMs = 1500; // delay in milliseconds
+    
+    setTimeout(function(){
+        $('#exampleModalCenter').modal('show');
+    }, delayMs);
+  });
+
+
+  function alertUser(msg) {
+  alert(msg);
+  } 
+  </script>
+
+  <script type="text/javascript">
+    
+  function printtype(msg) {
+  document.write(typeof msg);
+  } 
+
+  </script>
+
+
+</head>
+<!--
+   <body onload="alertUser('Welcone!')">
+-->
+ 
+<body onload="alertUser(<%= JSON.stringify(result.message) %>)">
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="../assets/js/preloader.js"></script>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+  <div class="body-wrapper">
+
+    <!-- partial:partials/_sidebar.html -->
+    <aside class="mdc-drawer mdc-drawer--dismissible mdc-drawer--open">
+      <div class="mdc-drawer__header">
+        <a href="index.html" class="brand-logo">
+          <img src="../assets/images/logo_new.png" alt="logo" width="170" height="45">
+        </a>
+      </div>
+      <div class="mdc-drawer__content">
+       
+        <div class="mdc-list-group">
+          <nav class="mdc-list mdc-drawer-menu">
+
+            <div class="user-info">
+            <p class="name">User</p>
+            <p class="email">user@educhain.edu</p>
+            </div>
+
+            <div class="mdc-list-item mdc-drawer-item">
+              <a class="mdc-drawer-link" href="home_main.html">
+                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">home</i>
+                Dashboard
+              </a>
+            </div>
+
+            <div class="mdc-list-item mdc-drawer-item">
+              <a class="mdc-drawer-link" href="main.html">
+                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">person</i>
+                Login
+              </a>
+            </div>
+
+
+            <div class="mdc-list-item mdc-drawer-item">
+              <!--<a class="mdc-drawer-link" href="pages/charts/chartjs.html">-->
+                <a class="mdc-drawer-link" href="queryform.html">
+                <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">visibility</i>
+                View Transactions
+              </a>
+            </div>
+
+           
+
+            
+            
+          </nav>
+        </div>
+        <div class="profile-actions">
+          <a href="javascript:;">Settings</a>
+          <span class="divider"></span>
+          <a href="javascript:;">Logout</a>
+        </div>
+        
+      </div>
+    </aside>
+    <!-- partial -->
+    <div class="main-wrapper mdc-drawer-app-content">
+      <!-- partial:partials/_navbar.html -->
+      <header class="mdc-top-app-bar">
+        <div class="mdc-top-app-bar__row">
+          <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+            <button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button sidebar-toggler">menu</button>
+            <span class="mdc-top-app-bar__title">Greetings User!</span>
+            <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon search-text-field d-none d-md-flex">
+              <i class="material-icons mdc-text-field__icon">search</i>
+              <input class="mdc-text-field__input" id="text-field-hero-input">
+              <div class="mdc-notched-outline">
+                <div class="mdc-notched-outline__leading"></div>
+                <div class="mdc-notched-outline__notch">
+                  <label for="text-field-hero-input" class="mdc-floating-label">Search..</label>
+                </div>
+                <div class="mdc-notched-outline__trailing"></div>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+
+
+      </header>
+      <!-- partial -->
+       
+
+              <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6 mdc-layout-grid__cell--span-12-tablet" align="center">
+             <div class="mdc-card">
+
+              
+              <button class="mdc-button mdc-button--unelevated" id="grant" >
+              <a class="mdc-drawer-item-icon" href="queryform.html" style="color: white">Query App</a>
+              </button><br>         
+             
+              </div>
+              </div>
+
+               <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6 mdc-layout-grid__cell--span-12-tablet" align="center">
+             <div class="mdc-card">
+                      
+              <button class="mdc-button mdc-button--unelevated filled-button--success" onclick="printtype(<%= result.j1 %>)">
+              View Transactions
+              </button>
+             
+              </div>
+              </div>
+
+
+             <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+                <div class="mdc-card p-0">
+                  <h6 class="card-title card-padding pb-0">Certificate Transaction</h6>
+                  <div class="table-responsive">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th class="text-left">Student ID</th>
+                          <th>Status</th>
+                          <th>Transaction Date</th>
+                          <th>Certificate No.</th>
+                          <th>Institute No.</th>
+                          <th>Marks</th>
+                          <th>Exam No.</th>
+                          <th>Timestamp</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="text-left"><%= result.j1[0][0] %></td>
+                          <td><font color="green"><%= result.j1[0][1] %></font></td>
+                          <td><%= result.j1[0][2] %></td>
+                          <td><%= result.j1[0][3] %></td>
+                          <td><%= result.j1[0][4] %></td>
+                          <td><%= result.j1[0][5] %></td>
+                          <td><%= result.j1[0][6] %></td>
+                          <td><%= result.j1[0][7] %></td>
+                        </tr>
+                        <tr>
+                          <td class="text-left"><%= result.j1[1][0] %></td>
+                          <td><font color="green"><%= result.j1[1][1] %></font></td>
+                          <td><%= result.j1[1][2] %></td>
+                          <td><%= result.j1[1][3] %></td>
+                          <td><%= result.j1[1][4] %></td>
+                          <td><%= result.j1[1][5] %></td>
+                          <td><%= result.j1[1][6] %></td>
+                          <td><%= result.j1[1][7] %></td>
+                        </tr>
+                       <tr>
+                          <td class="text-left"><%= result.j1[2][0] %></td>
+                          <td><font color="green"><%= result.j1[2][1] %></font></td>
+                          <td><%= result.j1[2][2] %></td>
+                          <td><%= result.j1[2][3] %></td>
+                          <td><%= result.j1[2][4] %></td>
+                          <td><%= result.j1[2][5] %></td>
+                          <td><%= result.j1[2][6] %></td>
+                          <td><%= result.j1[2][7] %></td>
+                        </tr>
+                    
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              
+              
+        </main>
+        <!-- partial:partials/_footer.html -->
+        <footer>
+          <div class="mdc-layout-grid" background-color="red">
+            <div class="mdc-layout-grid__inner">
+              <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                <span class="text-center text-sm-left d-block d-sm-inline-block tx-14">Copyright © <a href="https://www.bootstrapdash.com/" target="_blank">educhain.com </a>2020</span>
+              </div>
+              
+            </div>
+          </div>
+        </footer>
+        <!-- partial -->
+      </div>
+    </div>
+  </div>
+  <!-- plugins:js -->
+  <script src="../assets/vendors/js/vendor.bundle.base.js"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page-->
+  <script src="../assets/vendors/chartjs/Chart.min.js"></script>
+  <script src="../assets/vendors/jvectormap/jquery-jvectormap.min.js"></script>
+  <script src="../assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+  <!-- End plugin js for this page-->
+  <!-- inject:js -->
+  <script src="../assets/js/material.js"></script>
+  <script src="../assets/js/misc.js"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <script src="../assets/js/dashboard.js"></script>
+  <!-- End custom js for this page-->
+</body>
+</html> 

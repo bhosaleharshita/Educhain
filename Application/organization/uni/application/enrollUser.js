@@ -12,7 +12,7 @@ const fs = require('fs');
 const yaml = require('js-yaml');
 const path = require('path');
 
-async function main() {
+async function main(uname) {
     try {
         // load the network configuration
         let connectionProfile = yaml.safeLoad(fs.readFileSync('../gateway/connection-uni.yaml', 'utf8'));
@@ -22,15 +22,22 @@ async function main() {
         const caTLSCACerts = caInfo.tlsCACerts.pem;
         const ca = new FabricCAServices(caInfo.url, { trustedRoots: caTLSCACerts, verify: false }, caInfo.caName);
 
+        //String str="../identity/user/sppu/wallet";
+        //console.log(str)
+        console.log(`----------------- Creating ID for: ${uname} -----------------`)
+        console.log(uname)
+
+        var wpath= '../identity/user/'+uname+'/wallet'
+
         // Create a new file system based wallet for managing identities.
-        const walletPath = path.join(process.cwd(), '../identity/user/scoe/wallet');
+        const walletPath = path.join(process.cwd(), wpath);
         const wallet = await Wallets.newFileSystemWallet(walletPath);
         console.log(`Wallet path: ${walletPath}`);
 
         // Check to see if we've already enrolled the admin user.
-        const userExists = await wallet.get('scoe');
+        const userExists = await wallet.get(uname);
         if (userExists) {
-            console.log('An identity for the client user "scoe" already exists in the wallet');
+            console.log(`An identity for the client user ${uname} already exists in the wallet`);
             return;
         }
 
@@ -44,13 +51,22 @@ async function main() {
             mspId: 'uniMSP',
             type: 'X.509',
         };
-        await wallet.put('scoe', x509Identity);
-        console.log('Successfully enrolled client user "scoe" and imported it into the wallet');
+
+        await wallet.put(uname, x509Identity);
+        console.log(`Successfully enrolled client user ${uname} and imported it into the wallet`);
 
     } catch (error) {
-        console.error(`Failed to enroll client user "scoe": ${error}`);
-        process.exit(1);
+        console.error(`Failed to enroll client user ${uname}: ${error}`);
+        throw new Error(error);
     }
 }
 
-main();
+//main();
+
+/*
+main('SKN').then(() => {
+    console.log('SKN account created');
+}); 
+*/
+
+module.exports.execute = main;
