@@ -23,7 +23,11 @@ const { Wallets, Gateway } = require('fabric-network');
 
 
 // Main program function
+<<<<<<< HEAD
 async function main(prn, certiNo) {
+=======
+async function main() {
+>>>>>>> f4deef7be873462d848876881e90a01857195cde
 
     // A wallet stores a collection of identities for use
     const wallet = await Wallets.newFileSystemWallet('../identity/user/jio/wallet');
@@ -66,6 +70,7 @@ async function main(prn, certiNo) {
 
         // queries - commercial paper
         console.log('-----------------------------------------------------------------------------------------');
+<<<<<<< HEAD
         //console.log('****** Submitting certificate queries ****** \n\n ');
 
 
@@ -115,10 +120,62 @@ async function main(prn, certiNo) {
 
         //console.log('\n  Named query "" complete.');
         //console.log('-----------------------------------------------------------------------------------------\n\n');
+=======
+        console.log('****** Submitting certificate queries ****** \n\n ');
+
+
+        // 1 asset history
+        console.log('1. Query Certificate Paper History....');
+        console.log('-----------------------------------------------------------------------------------------\n');
+        let queryResponse = await contract.evaluateTransaction('queryHistory', '71926074H', '9010');
+
+        let json = JSON.parse(queryResponse.toString());
+        console.log(json);
+        console.log('\n\n');
+        console.log('\n  History query complete.');
+        console.log('-----------------------------------------------------------------------------------------\n\n');
+
+        // 2 ownership query
+        console.log('2. Query Certificate Ownership.... Certificates owned by 71926074H');
+        console.log('-----------------------------------------------------------------------------------------\n');
+        let queryResponse2 = await contract.evaluateTransaction('queryOwner', '71926074H');
+        json = JSON.parse(queryResponse2.toString());
+        console.log(json);
+
+        console.log('\n\n');
+        console.log('\n  Certificate Ownership query complete.');
+        console.log('-----------------------------------------------------------------------------------------\n\n');
+
+        // 3 partial key query
+        console.log('3. Query Certificate Paper Partial Key.... Certificates in org.certnetnet.certificates namespace and prefixed MagnetoCorp');
+        console.log('-----------------------------------------------------------------------------------------\n');
+        let queryResponse3 = await contract.evaluateTransaction('queryPartial', '719260074H');
+
+        json = JSON.parse(queryResponse3.toString());
+        console.log(json);
+        console.log('\n\n');
+
+        console.log('\n  Partial Key query complete.');
+        console.log('-----------------------------------------------------------------------------------------\n\n');
+
+
+        // 4 Named query - all redeemed papers
+        console.log('4. Named Query: ... All papers in org.certnetnet.certificates that are in current state of granted');
+        console.log('-----------------------------------------------------------------------------------------\n');
+        let queryResponse4 = await contract.evaluateTransaction('queryNamed', 'redeemed');
+
+        json = JSON.parse(queryResponse4.toString());
+        console.log(json);
+        console.log('\n\n');
+
+        console.log('\n  Named query "" complete.');
+        console.log('-----------------------------------------------------------------------------------------\n\n');
+>>>>>>> f4deef7be873462d848876881e90a01857195cde
 
 
         // 5 named query - by value
         //console.log('5. Named Query:.... All papers in org.certnetnet.certificates = 4001');
+<<<<<<< HEAD
         //console.log('-----------------------------------------------------------------------------------------\n');
         let queryResponse5 = await contract.evaluateTransaction('queryNamed', 'value');
 
@@ -142,6 +199,30 @@ async function main(prn, certiNo) {
 module.exports.execute = main;
 
 /*
+=======
+        console.log('-----------------------------------------------------------------------------------------\n');
+        let queryResponse5 = await contract.evaluateTransaction('queryNamed', 'value');
+
+        json = JSON.parse(queryResponse5.toString());
+        console.log(json);
+        console.log('\n\n');
+
+        console.log('\n  Named query by "value" complete.');
+        console.log('-----------------------------------------------------------------------------------------\n\n');
+    } catch (error) {
+
+        console.log(`Error processing transaction. ${error}`);
+        console.log(error.stack);
+
+    } finally {
+
+        // Disconnect from the gateway
+        console.log('Disconnect from Fabric gateway.');
+        gateway.disconnect();
+
+    }
+}
+>>>>>>> f4deef7be873462d848876881e90a01857195cde
 main().then(() => {
 
     console.log('Queryapp program complete.');
@@ -154,4 +235,7 @@ main().then(() => {
     process.exit(-1);
 
 });
+<<<<<<< HEAD
 */
+=======
+>>>>>>> f4deef7be873462d848876881e90a01857195cde

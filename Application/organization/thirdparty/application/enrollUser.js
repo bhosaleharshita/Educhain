@@ -12,7 +12,11 @@ const fs = require('fs');
 const yaml = require('js-yaml');
 const path = require('path');
 
+<<<<<<< HEAD
 async function main(uname) {
+=======
+async function main() {
+>>>>>>> f4deef7be873462d848876881e90a01857195cde
     try {
         // load the network configuration
         let connectionProfile = yaml.safeLoad(fs.readFileSync('../gateway/connection-thirdparty.yaml', 'utf8'));
@@ -22,6 +26,7 @@ async function main(uname) {
         const caTLSCACerts = caInfo.tlsCACerts.pem;
         const ca = new FabricCAServices(caInfo.url, { trustedRoots: caTLSCACerts, verify: false }, caInfo.caName);
 
+<<<<<<< HEAD
         console.log(`----------------- Creating ID for: ${uname} -----------------`)
         console.log(uname)
 
@@ -29,11 +34,19 @@ async function main(uname) {
 
         // Create a new file system based wallet for managing identities.
         const walletPath = path.join(process.cwd(), wpath);
+=======
+        // Create a new file system based wallet for managing identities.
+        const walletPath = path.join(process.cwd(), '../identity/user/jio/wallet');
+>>>>>>> f4deef7be873462d848876881e90a01857195cde
         const wallet = await Wallets.newFileSystemWallet(walletPath);
         console.log(`Wallet path: ${walletPath}`);
 
         // Check to see if we've already enrolled the admin user.
+<<<<<<< HEAD
         const userExists = await wallet.get(uname);
+=======
+        const userExists = await wallet.get('jio');
+>>>>>>> f4deef7be873462d848876881e90a01857195cde
         if (userExists) {
             console.log('An identity for the client user "user1" already exists in the wallet');
             return;
@@ -50,6 +63,7 @@ async function main(uname) {
             type: 'X.509',
         };
         await wallet.put('jio', x509Identity);
+<<<<<<< HEAD
         console.log(`Successfully enrolled client user ${uname} and imported it into the wallet`);
 
     } catch (error) {
@@ -62,3 +76,14 @@ async function main(uname) {
 
 module.exports.execute = main;
 
+=======
+        console.log('Successfully enrolled client user "jio" and imported it into the wallet');
+
+    } catch (error) {
+        console.error(`Failed to enroll client user "jio": ${error}`);
+        process.exit(1);
+    }
+}
+
+main();
+>>>>>>> f4deef7be873462d848876881e90a01857195cde
