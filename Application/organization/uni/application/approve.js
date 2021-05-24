@@ -24,11 +24,9 @@ const CommercialPaper = require('../../mhrd/contract/lib/paper.js');
 
 
 // Main program function
-<<<<<<< HEAD
+
 async function main (prn, certiNo, clg, marks) {
-=======
-async function main () {
->>>>>>> f4deef7be873462d848876881e90a01857195cde
+
 
     // A wallet stores a collection of identities for use
     const wallet = await Wallets.newFileSystemWallet('../identity/user/scoe/wallet');
@@ -74,16 +72,12 @@ async function main () {
 
         //ed (i.e. traded)  // transaction input - not written to asset
      
-<<<<<<< HEAD
+
         var today = new Date().toISOString().slice(0, 10)
         //console.log(today);
 
     //async buy(ctx, student, certNumber, collegename, newOwner(University), marks, approveDateTime)
         const buyResponse = await contract.submitTransaction('buy', prn, certiNo, clg, 'sppu', marks, today);
-=======
-    //async buy(ctx, student, certNumber, collegename, newOwner(University), marks, approveDateTime)
-        const buyResponse = await contract.submitTransaction('buy', '71926074H', '9010', 'scoe', 'sppu', 'NA', '2021-05-31');
->>>>>>> f4deef7be873462d848876881e90a01857195cde
 
         // process response
         console.log('Process approve transaction response.');
@@ -94,7 +88,7 @@ async function main () {
         console.log('Transaction complete.');
 
     } catch (error) {
-<<<<<<< HEAD
+
         console.error(`Certificate No. ${certiNo} : already approve ${error}`);
         console.log(error.stack);
         //console.log(error);
@@ -146,7 +140,3 @@ main().then(() => {
 
 module.exports.execute = main;
 
-=======
-
-});
->>>>>>> f4deef7be873462d848876881e90a01857195cde

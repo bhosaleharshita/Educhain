@@ -10,17 +10,12 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-<<<<<<< HEAD
     "cors": "^2.8.5",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
     "fabric-ca-client": "^2.2.4",
     "fabric-network": "^2.2.4",
-=======
-    "fabric-network": "^2.2.4",
-    "fabric-ca-client": "^2.2.4",
->>>>>>> f4deef7be873462d848876881e90a01857195cde
     "js-yaml": "^3.12.0"
   },
   "devDependencies": {

@@ -23,18 +23,13 @@ const { Wallets, Gateway } = require('fabric-network');
 const CommercialPaper = require('../contract/lib/paper.js');
 
 // Main program function
-<<<<<<< HEAD
+
 async function main(prn, clg, examno) {
 
     // A wallet stores a collection of identities for use
     var wpath= '../identity/user/'+prn+'/wallet'
     const wallet = await Wallets.newFileSystemWallet(wpath);
-=======
-async function main() {
 
-    // A wallet stores a collection of identities for use
-    const wallet = await Wallets.newFileSystemWallet('../identity/user/71926074H/wallet');
->>>>>>> f4deef7be873462d848876881e90a01857195cde
 
     // A gateway defines the peers used to access Fabric networks
     const gateway = new Gateway();
@@ -44,11 +39,9 @@ async function main() {
 
         // Specify userName for network access
         // const userName = 'isabella.issuer@magnetocorp.com';
-<<<<<<< HEAD
+
         const userName = prn;
-=======
-        const userName = '71926074H';
->>>>>>> f4deef7be873462d848876881e90a01857195cde
+
 
         // Load connection profile; will be used to locate a gateway
         let connectionProfile = yaml.safeLoad(fs.readFileSync('../gateway/connection-mhrd.yaml', 'utf8'));
@@ -78,13 +71,11 @@ async function main() {
         // issue commercial paper
         console.log('Submit Exam Registration transaction.');
 
-<<<<<<< HEAD
+
          var today = new Date().toISOString().slice(0, 10)
 
         const issueResponse = await contract.submitTransaction('issue', prn, '9010', today,  clg, examno);
-=======
-        const issueResponse = await contract.submitTransaction('issue', '71926074H', '9010', '2020-05-31', 'scoe', '40001');
->>>>>>> f4deef7be873462d848876881e90a01857195cde
+
 
         // process response
         console.log('Process Registration transaction response.'+issueResponse);
@@ -94,7 +85,7 @@ async function main() {
         console.log(`${paper.student_id} your Registration is successfull with Unique_Reg_No: ${paper.certNumber} for exam no: ${paper.examno}`);
         console.log('Transaction complete.');
 
-<<<<<<< HEAD
+
     }  catch (error) {
         console.error(`Certificate No. ${certiNo} : already Registered ${error}`);
         console.log(error.stack);
@@ -128,30 +119,3 @@ main().then(() => {
 
 
 module.exports.execute = main;
-=======
-    } catch (error) {
-
-        console.log(`Error processing transaction. ${error}`);
-        console.log(error.stack);
-
-    } finally {
-
-        // Disconnect from the gateway
-        console.log('Disconnect from Fabric gateway.');
-        gateway.disconnect();
-
-    }
-}
-main().then(() => {
-
-    console.log('Registration program complete.');
-
-}).catch((e) => {
-
-    console.log('Registration program exception.');
-    console.log(e);
-    console.log(e.stack);
-    process.exit(-1);
-
-});
->>>>>>> f4deef7be873462d848876881e90a01857195cde
