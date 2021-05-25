@@ -53,6 +53,86 @@
 
   </script>
 
+  <style>
+      .yourClass {
+  color: green;
+}
+    }
+  </style>
+
+
+  <script>
+    
+    function CreateTableFromJSON(tran, count) {
+      
+      var table = document.getElementById("tran_table");
+      table.class="table table-striped";
+      
+      for(var i=1; i<count; i++){
+
+        var row = table.insertRow(-1);
+
+        var cell1 = row.insertCell(0);
+        cell1.style.text="left";
+
+        var cell2 = row.insertCell(1);
+        cell2.style.color="green";
+
+        var cell3 = row.insertCell(2);
+        var cell4 = row.insertCell(3);
+        var cell5 = row.insertCell(4);
+        var cell6 = row.insertCell(5);
+        var cell7 = row.insertCell(6);
+        var cell8 = row.insertCell(7);
+
+        cell1.innerHTML = tran[i][0];
+        cell2.innerHTML = tran[i][1];
+        cell3.innerHTML = tran[i][2];
+        cell4.innerHTML = tran[i][3];
+        cell5.innerHTML = tran[i][4];
+        cell6.innerHTML = tran[i][5];
+        cell7.innerHTML = tran[i][6];
+        cell8.innerHTML = tran[i][7];
+      }
+      
+    }
+
+
+    function CreateTableFromJSON2(tran, count) {
+      
+      var table = document.getElementById("tran_table");
+      table.class="table table-striped";
+      
+      for(var i=1; i<count; i++){
+
+        var row = table.insertRow(-1);
+
+        var cell1 = row.insertCell(0);
+        cell1.style.text="left";
+
+        var cell2 = row.insertCell(1);
+        cell2.style.color="green";
+
+        var cell3 = row.insertCell(2);
+        var cell4 = row.insertCell(3);
+        var cell5 = row.insertCell(4);
+        var cell6 = row.insertCell(5);
+        var cell7 = row.insertCell(6);
+        var cell8 = row.insertCell(7);
+
+        cell1.innerHTML = tran[i][0];
+        cell2.innerHTML = tran[i][1];
+        cell3.innerHTML = tran[i][2];
+        cell4.innerHTML = tran[i][3];
+        cell5.innerHTML = tran[i][4];
+        cell6.innerHTML = tran[i][5];
+        cell7.innerHTML = tran[i][6];
+        cell8.innerHTML = tran[i][7];
+      }
+      
+    }
+       
+</script>
 
 </head>
 <!--
@@ -105,8 +185,8 @@
           <nav class="mdc-list mdc-drawer-menu">
 
             <div class="user-info">
-            <p class="name">User</p>
-            <p class="email">user@educhain.edu</p>
+            <p class="name"><%= result.username%></p>
+            <p class="email"><%= result.username%>@educhain.edu</p>
             </div>
 
             <div class="mdc-list-item mdc-drawer-item">
@@ -132,16 +212,12 @@
               </a>
             </div>
 
-           
-
-            
             
           </nav>
         </div>
         <div class="profile-actions">
-          <a href="javascript:;">Settings</a>
-          <span class="divider"></span>
-          <a href="javascript:;">Logout</a>
+           <form method="POST" action="/logout" id="reg-form">
+          <button onclick="logout()">Logout</button></form>
         </div>
         
       </div>
@@ -153,7 +229,7 @@
         <div class="mdc-top-app-bar__row">
           <div class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
             <button class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button sidebar-toggler">menu</button>
-            <span class="mdc-top-app-bar__title">Greetings User!</span>
+            <span class="mdc-top-app-bar__title">Greetings <%= result.username%>!</span>
             <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon search-text-field d-none d-md-flex">
               <i class="material-icons mdc-text-field__icon">search</i>
               <input class="mdc-text-field__input" id="text-field-hero-input">
@@ -173,34 +249,48 @@
       </header>
       <!-- partial -->
        
+       <main class="content-wrapper">
+         <div class="page-wrapper mdc-toolbar-fixed-adjust">
 
-              <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6 mdc-layout-grid__cell--span-12-tablet" align="center">
+              <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-3 mdc-layout-grid__cell--span-3-tablet" align="center">
              <div class="mdc-card">
 
               
               <button class="mdc-button mdc-button--unelevated" id="grant" >
-              <a class="mdc-drawer-item-icon" href="queryform.html" style="color: white">Query App</a>
-              </button><br>         
+              <a class="mdc-drawer-item-icon" href="registerform.html" style="color: white">Register for Exam</a>
+              </button>
+
+              </div>
+              </div>
+
+              <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-3 mdc-layout-grid__cell--span-3-tablet" align="center">
+             <div class="mdc-card">
+
+              
+              <button class="mdc-button mdc-button--unelevated filled-button--success" id="grant" >
+              <a class="mdc-drawer-item-icon" href="queryform.html" style="color: white">View your Certificates</a>
+              </button>         
              
               </div>
               </div>
 
-               <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6 mdc-layout-grid__cell--span-12-tablet" align="center">
+               <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-3 mdc-layout-grid__cell--span-2-tablet" align="center">
              <div class="mdc-card">
                       
-              <button class="mdc-button mdc-button--unelevated filled-button--success" onclick="printtype(<%= result.j1 %>)">
-              View Transactions
-              </button>
+              <button class="mdc-button mdc-button--unelevated filled-button--info" id="grant" >
+              <a class="mdc-drawer-item-icon" href="queryallform.html" style="color: white">View All Transaction</a>
+              </button> 
              
               </div>
               </div>
+            </div>
 
 
              <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
                 <div class="mdc-card p-0">
-                  <h6 class="card-title card-padding pb-0">Certificate Transaction</h6>
+                  <h6 class="card-title card-padding pb-0">Your all Certificates</h6>
                   <div class="table-responsive">
-                    <table class="table table-striped">
+                    <table class="table table-striped" id="tran_table">
                       <thead>
                         <tr>
                           <th class="text-left">Student ID</th>
@@ -210,12 +300,12 @@
                           <th>Institute No.</th>
                           <th>Marks</th>
                           <th>Exam No.</th>
-                          <th>Timestamp</th>
+                          <th>Key</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
-                          <td class="text-left"><%= result.j1[0][0] %></td>
+                          <td><%= result.j1[0][0] %></td>
                           <td><font color="green"><%= result.j1[0][1] %></font></td>
                           <td><%= result.j1[0][2] %></td>
                           <td><%= result.j1[0][3] %></td>
@@ -224,26 +314,7 @@
                           <td><%= result.j1[0][6] %></td>
                           <td><%= result.j1[0][7] %></td>
                         </tr>
-                        <tr>
-                          <td class="text-left"><%= result.j1[1][0] %></td>
-                          <td><font color="green"><%= result.j1[1][1] %></font></td>
-                          <td><%= result.j1[1][2] %></td>
-                          <td><%= result.j1[1][3] %></td>
-                          <td><%= result.j1[1][4] %></td>
-                          <td><%= result.j1[1][5] %></td>
-                          <td><%= result.j1[1][6] %></td>
-                          <td><%= result.j1[1][7] %></td>
-                        </tr>
-                       <tr>
-                          <td class="text-left"><%= result.j1[2][0] %></td>
-                          <td><font color="green"><%= result.j1[2][1] %></font></td>
-                          <td><%= result.j1[2][2] %></td>
-                          <td><%= result.j1[2][3] %></td>
-                          <td><%= result.j1[2][4] %></td>
-                          <td><%= result.j1[2][5] %></td>
-                          <td><%= result.j1[2][6] %></td>
-                          <td><%= result.j1[2][7] %></td>
-                        </tr>
+                        
                     
                       </tbody>
                     </table>
@@ -251,7 +322,15 @@
                 </div>
               </div>
 
+               <input type="button" onclick="CreateTableFromJSON(<%= JSON.stringify(result.j1) %>, <%= JSON.stringify(result.count1) %>)" value="more..." />
+              <p id="showData"></p>
+              <br><br>
+
+<!-- Another table 
+
               
+
+   -->           
               
         </main>
         <!-- partial:partials/_footer.html -->
