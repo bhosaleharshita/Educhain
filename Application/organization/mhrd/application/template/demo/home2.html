@@ -267,7 +267,7 @@
              <div class="mdc-card">
 
               
-              <button class="mdc-button mdc-button--unelevated filled-button--success" id="grant" >
+              <button class="mdc-button mdc-button--unelevated filled-button--info" id="grant" >
               <a class="mdc-drawer-item-icon" href="queryform.html" style="color: white">View your Certificates</a>
               </button>         
              
@@ -300,7 +300,7 @@
                           <th>Institute No.</th>
                           <th>Marks</th>
                           <th>Exam No.</th>
-                          <th>Key</th>
+                          <th>Timestamp</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -322,7 +322,7 @@
                 </div>
               </div>
 
-               <input type="button" onclick="CreateTableFromJSON(<%= JSON.stringify(result.j1) %>, <%= JSON.stringify(result.count1) %>)" value="more..." />
+              <input type="button" onclick="CreateTableFromJSON(<%= JSON.stringify(result.j1) %>, <%= JSON.stringify(result.count1) %>)" value="more..." />
               <p id="showData"></p>
               <br><br>
 

@@ -42,7 +42,7 @@ function alertUser(msg) {
 
             <div class="user-info">
             <p class="name">User</p>
-            <p class="email">user@educhain.edu</p>
+            <p class="email">User@educhain.edu</p>
             </div>
 
             <div class="mdc-list-item mdc-drawer-item">
@@ -63,7 +63,7 @@ function alertUser(msg) {
 
             <div class="mdc-list-item mdc-drawer-item">
               <!--<a class="mdc-drawer-link" href="pages/charts/chartjs.html">-->
-                <a class="mdc-drawer-link" href="approveform.html">
+                <a class="mdc-drawer-link" href="queryform.html">
                 <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">visibility</i>
                 View Transactions
               </a>
@@ -73,10 +73,9 @@ function alertUser(msg) {
             
           </nav>
         </div>
-        <div class="profile-actions">
-          <a href="javascript:;">Settings</a>
-          <span class="divider"></span>
-          <a href="javascript:;">Logout</a>
+       <div class="profile-actions">
+           <form method="POST" action="/logout" id="reg-form">
+          <button onclick="logout()">Logout</button></form>
         </div>
         
       </div>
@@ -135,8 +134,8 @@ function alertUser(msg) {
                         </div>
                       </div>
                       <br>
-
-                      <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
+                      
+                       <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-6-desktop">
                         <div class="mdc-text-field mdc-text-field--outlined mdc-text-field--with-leading-icon">
                           <input class="mdc-text-field__input" name="certiNo" id="certiNo">
                           <div class="mdc-notched-outline">
@@ -148,6 +147,7 @@ function alertUser(msg) {
                           </div>
                         </div>
                       </div>
+                     
                       <br>
                       
                     </div>

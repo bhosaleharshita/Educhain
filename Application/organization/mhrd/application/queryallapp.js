@@ -81,16 +81,7 @@ async function main(prn, certiNo) {
         //console.log('\n  History query complete.');
         //console.log('-----------------------------------------------------------------------------------------\n\n');
 
-        // 2 ownership query
-       console.log('2. Query Certificate Ownership.... Certificates owned by 71926074H');
-        console.log('-----------------------------------------------------------------------------------------\n');
-        let queryResponse2 = await contract.evaluateTransaction('queryOwner', prn);
-        let json2 = JSON.parse(queryResponse2.toString());
-        console.log(json2);
-
-       // console.log('\n\n');
-        //console.log('\n  Certificate Ownership query complete.');
-        //console.log('-----------------------------------------------------------------------------------------\n\n');
+       
 
         // 3 partial key query
        // console.log('3. Query Certificate Paper Partial Key.... Certificates in org.certnetnet.certificates namespace and prefixed MagnetoCorp');
@@ -130,7 +121,7 @@ async function main(prn, certiNo) {
         //console.log('\n  Named query by "value" complete.');
         //console.log('-----------------------------------------------------------------------------------------\n\n');
 
-        return json2;
+        return json1;
     }
 
     catch (error){

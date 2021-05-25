@@ -9,8 +9,10 @@ var bodyParser = require('body-parser');
 const register= require('./register');
 const enrollUser = require('./enrollUser');
 const login = require('./login');
+const logout = require('./logout');
 const queryapp = require('./queryapp');
 const update=require('./update');
+const queryallapp = require('./queryallapp');
 
 // Define Express app settings
 app.use(cors());
@@ -26,11 +28,61 @@ app.set('view engine', 'html');
 app.use(express.static(__dirname + '/template')); 
 app.use(express.static(__dirname + '/template/demo')); 
 
+//session needs
 const session = require('express-session');
+//app.use(session({secret: "Shh, its a secret!"}));
+
+app.use(session({
+    resave: false, 
+    saveUninitialized: true,
+    secret: 'Educhain app', 
+    cookie: {maxAge: 60 * 1000 * 30}
+}));
+var sess;
+
+app.use(function(req, res, next) {
+  res.locals.user = req.session.user;
+  console.log('In local user');
+  console.log(res.locals.user);
+  next();
+});
 
 
 app.get('/main', function (req, res) {  
    res.sendFile( __dirname + "/template/demo/" + "main.html" );  
+});
+
+app.post('/login', (req, res) => {
+  	login.execute(req.body.username)
+			.then(() => {
+				console.log('Logged in successfully');
+				sess=req.session;
+				sess.user_name= req.body.username;
+				//res.locals.user=req.body.username;
+
+				console.log(req.session.user_name);
+
+				const result = {
+					status: 'success',
+					message: 'Logged in successfully',
+					username: sess.user_name
+				};
+				//res.json(result);
+				//console.log(typeof req.session);
+				res.render( __dirname + "/template/demo/" + "home_main.html", {result:result});	
+				//res.render( __dirname + "/template/demo/" + "queryform.html", {result:result});	
+			})
+			.catch((e) => {
+				const result = {
+					status: 'error',
+					message: 'Login failed. Enter valid credentials',
+					error: e
+				};
+				console.log(e);
+				//res.status(500).send(result);
+				res.render( __dirname + "/template/demo/" + "login.html", {result:result});
+				//res.sendFile( __dirname + "/template/demo/" + "index.html" );  
+			});
 });
 
 app.post('/register', (req, res) => {
@@ -43,15 +95,20 @@ app.post('/register', (req, res) => {
 					username: req.body.prn
 				};
 				//res.json(result);
-				res.render( __dirname + "/template/demo/" + "registerform.html", {result:result});
+				console.log('In Registration');
+				console.log(sess.user_name);
+				res.render( __dirname + "/template/demo/" + "home_main.html", {result:result});
 			})
 			.catch((e) => {
 				const result = {
 					status: 'error',
-					message: 'Registration failed: Check Form again!',
-					error: e
+					message: 'Exam Registration failed: Check Form again!',
+					error: e,
+					username:req.body.prn
+					//username: sess.user_name
 				};
 				//res.status(500).send(result);
+				console.log(e);
 				res.render( __dirname + "/template/demo/" + "registerform.html", {result:result});
 				//res.sendFile( __dirname + "/template/demo/" + "index.html" );  
 			});
@@ -91,7 +148,10 @@ app.post('/queryapp', (req, res) => {
   queryapp.execute(req.body.prn, req.body.certiNo)
 			.then((json1) => {
 				console.log('Certificates viewed successfully');
+
+				console.log(json1);
 				
+				/*
 				json_org=json1[0].Value.currentState;	
 				json_str=JSON.stringify(json1);			
 				
@@ -113,16 +173,55 @@ app.post('/queryapp', (req, res) => {
         			str.push(temp);
             		           		
         		}
+		
+				*/
+				var str2= [];
+				for(var i = 0; i < Object.keys(json1).length; i++) {
+            		
+            		var temp=[];
+        			temp.push(json1[i].Record.student_id);
 
-        		console.log(str);
-				console.log(json_str);
+        			if(json1[i].Record.currentState==1){
+        				temp.push('REGISTERED');
+        			}
+        			else if(json1[i].Record.currentState==2){
+        				temp.push('PENDING');
+        			}
+        			else if(json1[i].Record.currentState==3){
+        				temp.push('APPROVED');
+        			}
+        			else if(json1[i].Record.currentState==4){
+        				temp.push('GRANTED');
+        			}
+
+        			temp.push(json1[i].Record.registration_DateTime);
+        			temp.push(json1[i].Record.certNumber);
+        			temp.push(json1[i].Record.collegename);
+        			temp.push(json1[i].Record.marks);
+        			temp.push(json1[i].Record.examno);
+        			temp.push(json1[i].Key);
+
+        			console.log(temp);
+
+        			str2.push(temp);
+            		           		
+        		}
+
+        		console.log(str2);
+        		
 				
 				const result = {
 					status: 'success',
-					message: 'queryapp successfully!',
-					j1: str,
-					j2: json_str
+					message: 'Viewed transactions successfully!',
+					j1: str2,
+					//j2: str2,
+					//count1: str.length,
+					count2: str2.length,
+					username: req.body.prn
 				};
+
+				console.log('In View transaction');
+				console.log(sess.user_name);
 
 				//res.json(result);
 				res.render( __dirname + "/template/demo/" + "home.html", {result:result});
@@ -130,38 +229,101 @@ app.post('/queryapp', (req, res) => {
 			.catch((e) => {
 				const result = {
 					status: 'error',
-					message: 'Grant failed: Check Certificate again!',
-					error: e
+					message: 'View transactions failed: Check Certificate again!',
+					error: e,
+					username: sess.user_name
 				};
 				//res.status(500).send(result);
+				console.log(e);
 				res.render( __dirname + "/template/demo/" + "queryform.html", {result:result});
 				//res.sendFile( __dirname + "/template/demo/" + "index.html" );  
 			});
 });
 
 
+app.post('/queryallapp', (req, res) => {
+  queryallapp.execute(req.body.prn, req.body.certiNo)
+			.then((json1) => {
+				console.log('Certificates viewed successfully');
 
-app.post('/login', (req, res) => {
-	sess = req.session;
-  	login.execute(req.body.username)
-			.then(() => {
-				console.log('Logged in successfully');
+									
+				var str= [];
+				for(var i = 0; i < Object.keys(json1).length; i++) {
+            		
+            		var temp=[];
+        			temp.push(json1[i].Value.student_id);
+        			temp.push(json1[i].Value.currentState);
+        			temp.push(json1[i].Value.registration_DateTime);
+        			temp.push(json1[i].Value.certNumber);
+        			temp.push(json1[i].Value.collegename);
+        			temp.push(json1[i].Value.marks);
+        			temp.push(json1[i].Value.examno);
+        			temp.push(json1[i].Timestamp);
+
+        			console.log(temp);
+
+        			str.push(temp);
+            		           		
+        		}
+
+				
 				const result = {
 					status: 'success',
-					message: 'Logged in successfully',
-					username: req.body.username
+					message: 'Viewed transactions successfully!',
+					j1: str,
+					//j2: str2,
+					count1: str.length,
+					//count2: str2.length,
+					username: req.body.prn
 				};
+
+				console.log('In View transaction');
+				console.log(sess.user_name);
+
 				//res.json(result);
-				res.render( __dirname + "/template/demo/" + "home_main.html", {result:result});	
+				res.render( __dirname + "/template/demo/" + "home2.html", {result:result});
 			})
 			.catch((e) => {
 				const result = {
 					status: 'error',
-					message: 'Login failed. Enter valid credentials',
-					error: e
+					message: 'View transactions failed: Check Certificate again!',
+					error: e,
+					username: sess.user_name
 				};
 				//res.status(500).send(result);
-				res.render( __dirname + "/template/demo/" + "login.html", {result:result});
+				console.log(e);
+				res.render( __dirname + "/template/demo/" + "queryallform.html", {result:result});
+				//res.sendFile( __dirname + "/template/demo/" + "index.html" );  
+			});
+});
+
+
+
+app.post('/logout', (req, res) => {
+  	logout.execute(sess.user_name)
+			.then(() => {
+				console.log('Logged out successfully');
+				req.session.destroy();
+				
+				//console.log(req.session.user_name);
+
+				const result = {
+					status: 'success',
+					message: 'Logged out successfully'
+				};
+				//res.json(result);
+				//console.log(typeof req.session);
+				res.render( __dirname + "/template/demo/" + "main.html", {result:result});	
+			})
+			.catch((e) => {
+				const result = {
+					status: 'error',
+					message: 'Logout failed. Please try again!',
+					error: e
+				};
+				console.log(e);
+				//res.status(500).send(result);
+				res.render( __dirname + "/template/demo/" + "main.html", {result:result});
 				//res.sendFile( __dirname + "/template/demo/" + "index.html" );  
 			});
 });
