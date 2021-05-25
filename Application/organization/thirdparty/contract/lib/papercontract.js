@@ -98,6 +98,8 @@ class CommercialPaperContract extends Contract {
       * @param {Integer} price price paid for this paper // transaction input - not written to asset
       * @param {String} purchaseDateTime time paper was purchased (i.e. traded)  // transaction input - not written to asset
      */
+
+     //APPROVE TRANSACTION
     async buy(ctx, student_id, certNumber, collegename, newOwner, marks, approval_DateTime) {
 
         // Retrieve the current paper using key fields provided
@@ -136,14 +138,16 @@ class CommercialPaperContract extends Contract {
       *  Note: 'buy_request' puts paper in 'PENDING' state - subject to transfer confirmation [below].
       * 
       * @param {Context} ctx the transaction context
-      * @param {String} issuer commercial paper issuer
+      * @param {String} issuer commercial paper issuer(studentprn)
       * @param {Integer} paperNumber paper number for this issuer
-      * @param {String} currentOwner current owner of paper
-      * @param {String} newOwner new owner of paper                              // transaction input - not written to asset per se - but written to block
-      * @param {Integer} price price paid for this paper                         // transaction input - not written to asset per se - but written to block
-      * @param {String} purchaseDateTime time paper was requested                // transaction input - ditto.
+      * @param {String} currentOwner current owner of paper(studentprn)
+      * @param {String} newOwner new owner of paper(sppu)                              // transaction input - not written to asset per se - but written to block
+      * @param {Integer} updatrequest update msg(string) with what want to update with external references/links                         // transaction input - not written to asset per se - but written to block
+                    
      */
-    async buy_request(ctx, issuer, paperNumber, currentOwner, newOwner, price, purchaseDateTime) {
+
+     //UPDATE REQUEST BY STUDENT
+    async buy_request(ctx, issuer, paperNumber, currentOwner,newOwner, updaterequest) {
         
 
         // Retrieve the current paper using key fields provided
@@ -155,7 +159,12 @@ class CommercialPaperContract extends Contract {
             throw new Error('\nPaper ' + issuer + paperNumber + ' is not owned by ' + currentOwner + ' provided as a paraneter');
         }
         // paper set to 'PENDING' - can only be transferred (confirmed) by identity from owning org (MSP check).
+        paper.updatemsg=updaterequest;
+        paper.setOwner(newOwner);
+        paper.setOwnerMSP('uniMSP');
         paper.setPending();
+        //paper.setupdatemsg(updaterequest);
+        
 
         // Update the paper
         await ctx.paperList.updatePaper(paper);
@@ -168,13 +177,15 @@ class CommercialPaperContract extends Contract {
      * this transaction 'pair' is an alternative to the straight issue -> buy -> [buy....n] -> redeem ...path
      *
      * @param {Context} ctx the transaction context
-     * @param {String} issuer commercial paper issuer
+     * @param {String} issuer commercial paper issuer(studentprn)
      * @param {Integer} paperNumber paper number for this issuer
-     * @param {String} newOwner new owner of paper
-     * @param {String} newOwnerMSP  MSP id of the transferee
-     * @param {String} confirmDateTime  confirmed transfer date.
+     * @param {String} updatefield field to update
+     * @param {String} newvalue  new value for updation field
+     * @param {String} updation comment by university with timestamp.
     */
-    async transfer(ctx, issuer, paperNumber, newOwner, newOwnerMSP, confirmDateTime) {
+
+    //RESOLVING UPDATE REQUEST BY UNIVERSITY
+    async transfer(ctx, issuer, paperNumber, updatefield,newvalue,updationcomment) {
 
         // Retrieve the current paper using key fields provided
         let paperKey = CommercialPaper.makeKey([issuer, paperNumber]);
@@ -188,15 +199,54 @@ class CommercialPaperContract extends Contract {
 
         // Paper needs to be 'pending' - which means you need to have run 'buy_pending' transaction first.
         if ( ! paper.isPending()) {
-            throw new Error('\nPaper ' + issuer + paperNumber + ' is not currently in state: PENDING for transfer to occur: \n must run buy_request transaction first');
+            throw new Error('\nPaper ' + issuer + paperNumber + ' is not open for Updation : \n must perform Update Request Trasaction First transaction first');
         }
         // else all good
 
-        paper.setOwner(newOwner);
+        
+        
+        // switch(updatefield)
+        // {
+        // 	case 'marks':
+        // 	{
+        // 			paper.setMarks(newvalue);
+        // 			break;
+        // 	}
+        // 	case 'clgname':
+        // 	{
+        // 		paper.setcollege(newvalue);
+        // 		break;
+
+        // 	}
+        // 	case 'none':
+        // 	{
+        // 		break;
+        // 	}
+
+        // 	default:
+        // 	{
+        // 		throw new Error('\nThe updation field request is invalid');
+
+        // 	}
+
+        switch (updatefield) {
+            case "marks":
+                paper.setMarks(newvalue);  
+                break;
+            case "clgname":
+                paper.setcollege(newvalue); 
+                break;
+            case "none":
+                break;
+            default: // else, unknown named query
+                throw new Error('Not allowed to update this field ');
+        }
+
+        paper.setRedeemed();
+        paper.after_updation_comment =updationcomment;
+        paper.setOwner(issuer);
         // set the MSP of the transferee (so that, that org may also pass MSP check, if subsequently transferred/sold on)
-        paper.setOwnerMSP(newOwnerMSP);
-        paper.setTrading();
-        paper.confirmDateTime = confirmDateTime;
+        paper.setOwnerMSP(mhrdMSP);
 
         // Update the paper
         await ctx.paperList.updatePaper(paper);
@@ -213,6 +263,9 @@ class CommercialPaperContract extends Contract {
      * @param {String} issuingOwnerMSP the MSP of the org that the paper will be redeemed with.
      * @param {String} redeemDateTime time paper was redeemed
     */
+
+
+    //GRANT TRANSACTION
     async redeem(ctx, student_id, certNumber, grantingOwner, studentOwnerMSP, grantDateTime,marks) {
 
         let paperKey = CommercialPaper.makeKey([student_id, certNumber]);

@@ -13,9 +13,15 @@ const State = require('./../ledger-api/state.js');
 const cpState = {
     REGISTERED: 1,
     PENDING: 2,
-    GRANTED: 3,
-    UPDATION: 4
+    APPROVED: 3,
+    GRANTED: 4
 };
+
+/*
+ISSUED:REGISTERED:1
+TRADING:APPROVED BY CLG:3
+REDEEMED:GRANTED:4
+*/
 
 /**
  * CommercialPaper class extends State class
@@ -24,7 +30,7 @@ const cpState = {
 class CommercialPaper extends State {
 
     constructor(obj) {
-        super(CommercialPaper.getClass(), [obj.issuer, obj.paperNumber]);
+        super(CommercialPaper.getClass(), [obj.student_id, obj.certNumber]);
         Object.assign(this, obj);
     }
 
@@ -32,11 +38,11 @@ class CommercialPaper extends State {
      * Basic getters and setters
     */
     getIssuer() {
-        return this.issuer;
+        return this.student_id;
     }
 
     setIssuer(newIssuer) {
-        this.issuer = newIssuer;
+        this.student_id = newIssuer;
     }
 
     getOwner() {
@@ -55,19 +61,34 @@ class CommercialPaper extends State {
         this.owner = newOwner;
     }
 
+    setMarks(mrks){
+    	this.marks=mrks;
+    }
+
+    getMarks(mrks){
+    	return this.marks;
+    }
+
+    setcollee(clg){
+        this.collegename=clg;
+    }
+    getcollege(){
+        return this.collegename;
+    }
+
     /**
      * Useful methods to encapsulate commercial paper states
      */
     setIssued() {
-        this.currentState = cpState.ISSUED;
+        this.currentState = cpState.REGISTERED;
     }
 
-    setGranted() {
+    setTrading() {
+        this.currentState = cpState.APPROVED;
+    }
+
+    setRedeemed() {
         this.currentState = cpState.GRANTED;
-    }
-
-    setUpdation() {
-        this.currentState = cpState.UPDATION;
     }
 
     setPending() {
@@ -75,15 +96,15 @@ class CommercialPaper extends State {
     }
 
     isIssued() {
-        return this.currentState === cpState.ISSUED;
+        return this.currentState === cpState.REGISTERED;
     }
 
-    isGranted() {
+    isTrading() {
+        return this.currentState === cpState.APPROVED;
+    }
+
+    isRedeemed() {
         return this.currentState === cpState.GRANTED;
-    }
-
-    isUpdation() {
-        return this.currentState === cpState.UPDATION;
     }
 
     isPending() {
@@ -109,8 +130,8 @@ class CommercialPaper extends State {
     /**
      * Factory method to create a commercial paper object
      */
-    static createInstance(issuer, certNumber, issueDateTime, maturityDateTime, examname) {
-        return new CommercialPaper({ issuer, certNumber, issueDateTime, maturityDateTime, examname });
+    static createInstance(student_id, certNumber, registration_DateTime, collegename, examno, marks) {
+        return new CommercialPaper({student_id, certNumber, registration_DateTime, collegename, examno, marks});
     }
 
     static getClass() {

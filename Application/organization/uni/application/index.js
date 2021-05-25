@@ -10,6 +10,7 @@ const login = require('./login');
 const enrollUser = require('./enrollUser');
 const approve = require('./approve');
 const grant = require('./grant');
+const updation = require('./updation');
 
 // Define Express app settings
 app.use(cors());
@@ -57,6 +58,30 @@ app.post('/approve', (req, res) => {
 			});
 });
 
+app.post('/updation', (req, res) => {
+  grant.execute(req.body.prn, req.body.certiNo, req.body.updatefield, req.body.newvalue, req.body.updationcommet)
+			.then(() => {
+				console.log('Certificate Updated successfully');
+				const result = {
+					status: 'success',
+					message: 'Certificate Updated successfully!',
+					username: req.body.prn
+				};
+				//res.json(result);
+				res.render( __dirname + "/template/demo/" + "updationform.html", {result:result});
+			})
+			.catch((e) => {
+				const result = {
+					status: 'error',
+					message: 'Updation failed: Check Certificate again!',
+					error: e
+				};
+				//res.status(500).send(result);
+				res.render( __dirname + "/template/demo/" + "updationform.html", {result:result});
+				//res.sendFile( __dirname + "/template/demo/" + "index.html" );  
+			});
+});
+
 app.post('/grant', (req, res) => {
   grant.execute(req.body.prn, req.body.certiNo, req.body.clg, req.body.marks)
 			.then(() => {
@@ -80,6 +105,9 @@ app.post('/grant', (req, res) => {
 				//res.sendFile( __dirname + "/template/demo/" + "index.html" );  
 			});
 });
+
+
+
 
 
 

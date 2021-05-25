@@ -69,11 +69,18 @@ class CommercialPaper extends State {
     	return this.marks;
     }
 
-    setcollee(clg){
+    setcollege(clg){
         this.collegename=clg;
     }
     getcollege(){
         return this.collegename;
+    }
+
+    setupdatemsg(updatemsg){
+        this.updatemsg=updatemsg;
+    }
+    getupdatemsg(){
+        return this.updatemsg;
     }
 
     /**
@@ -108,6 +115,7 @@ class CommercialPaper extends State {
     }
 
     isPending() {
+
         return this.currentState === cpState.PENDING;
     }
 
@@ -130,8 +138,8 @@ class CommercialPaper extends State {
     /**
      * Factory method to create a commercial paper object
      */
-    static createInstance(student_id, certNumber, registration_DateTime, collegename, examno, marks) {
-        return new CommercialPaper({student_id, certNumber, registration_DateTime, collegename, examno, marks});
+    static createInstance(student_id, certNumber, registration_DateTime, collegename, examno, marks, updatemsg) {
+        return new CommercialPaper({student_id, certNumber, registration_DateTime, collegename, examno, marks,updatemsg});
     }
 
     static getClass() {

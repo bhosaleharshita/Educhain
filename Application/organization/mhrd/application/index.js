@@ -10,6 +10,7 @@ const register= require('./register');
 const enrollUser = require('./enrollUser');
 const login = require('./login');
 const queryapp = require('./queryapp');
+const update=require('./update');
 
 // Define Express app settings
 app.use(cors());
@@ -55,6 +56,35 @@ app.post('/register', (req, res) => {
 				//res.sendFile( __dirname + "/template/demo/" + "index.html" );  
 			});
 });
+
+
+
+app.post('/update', (req, res) => {
+  update.execute(req.body.prn, req.body.pprno, req.body.uniname,req.body.updatereq)
+			.then(() => {
+				console.log('Updation request  successfull');
+				const result = {
+					status: 'success',
+					message: 'Updation request  successfull!',
+					username: req.body.prn
+				};
+				//res.json(result);
+				res.render( __dirname + "/template/demo/" + "updateform.html", {result:result});
+			})
+			.catch((e) => {
+				const result = {
+					status: 'error',
+					message: 'Updation Request failed: Check Form again!',
+					error: e
+				};
+				//res.status(500).send(result);
+				res.render( __dirname + "/template/demo/" + "updateform.html", {result:result});
+				//res.sendFile( __dirname + "/template/demo/" + "index.html" );  
+			});
+});
+
+
+
 
 
 app.post('/queryapp', (req, res) => {
