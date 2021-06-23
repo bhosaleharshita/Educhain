@@ -16,14 +16,15 @@ You can use the `./network.sh` script to stand up a simple Fabric test network. 
 - Open command prompts from each org folder
 (1 prompt from mhrd,1 from uni and 1 from thirdparty )
 
-Repeat the below steps on each cmd
+	//Repeat the below steps on each cmd
 
 - source mhrd.sh/uni.sh/thirdparty.sh (according to the prompt you are using)
 
-	*packaging chaincode* 
+*PACKAGING CHAINCODE*
+	
 - peer lifecycle chaincode package cp.tar.gz --lang node --path ./contract --label cp_0
 
-	*installing chaincode on the peer*
+*CHAINCODE INSTALLATION*
 - peer lifecycle chaincode install cp.tar.gz
 
 - peer lifecycle chaincode queryinstalled
@@ -31,12 +32,12 @@ Repeat the below steps on each cmd
 
 - export PACKAGE_ID=(cp_0:ffda93e26b183e231b7e9d5051e1ee7ca47fbf24f00a8376ec54120b1a2a335c) --add the package id returned by previou query
 
-	*approving the chaincode defination for your org*
+*APPROVE CHAINCODE FOR ORG*
 - peer lifecycle chaincode approveformyorg --orderer localhost:7050 --ordererTLSHostnameOverride orderer.example.com --channelID mychannel --name papercontract -v 0 --package-id $PACKAGE_ID --sequence 1 --tls --cafile $ORDERER_CA
 
 After successfully performing above steps for each peer,perform the below step on any one of the prompts
 
-        *Commiting the chaincode defination*
+*COMMITING THE CHAINCODE DEFINATION*
 - peer lifecycle chaincode commit -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --peerAddresses localhost:7051 --tlsRootCertFiles ${PEER0_uni_CA} --peerAddresses localhost:9051 --tlsRootCertFiles ${PEER0_mhrd_CA} --peerAddresses localhost:11051 --tlsRootCertFiles ${PEER0_thirdparty_CA} --channelID mychannel --name papercontract -v 0 --sequence 1 --tls --cafile $ORDERER_CA --waitForEvent
 
 OUTPUT: Chaincode Containers up and running for all 3 peers
@@ -50,7 +51,7 @@ OUTPUT: Chaincode Containers up and running for all 3 peers
 
 - run: npm install (do this on all 3 prompts,may take some time | required only during first time setup)
 
-	//optional step to check working of backend
+	*Optional step to check working of backend*
 - run: node [script_name.js] (will run the specified script)
 
 
@@ -67,7 +68,7 @@ OUTPUT: Chaincode Containers up and running for all 3 peers
 - npm install express-session
 (above steps need to be performed only once)
 
-	//Start UI 
+	Start UI 
 - run node index.js
 
 
